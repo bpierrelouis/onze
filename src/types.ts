@@ -4,7 +4,8 @@ import { GameModel } from "./machine/GameMachine"
 export enum GameStates {
     LOBBY = "LOBBY",
     PLAY = "PLAY",
-    VICTORY = "VICTORY"
+    ROUND_VICTORY = "ROUND_VICTORY",
+    GAME_VICTORY = "GAME_VICTORY"
 }
 
 export enum QueryParams {

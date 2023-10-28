@@ -3,7 +3,7 @@ import { useGame } from "../hooks/useGame";
 import { Card } from "./Card";
 import { TrashCard } from "./TrashCard";
 
-export function Board({ trashClick, onClick }: { trashClick: () => void, onClick: (i: number) => void }) {
+export function CardBoard({ trashClick, onClick }: { trashClick: () => void, onClick: (i: number) => void }) {
     const { context, send } = useGame();
     return <>
         <div className="decks">

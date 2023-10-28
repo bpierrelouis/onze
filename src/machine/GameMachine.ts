@@ -1,8 +1,8 @@
 import { createModel } from "xstate/lib/model"
 import { GameCard, GameContext, GameStates, Player } from "../types"
 import { InterpreterFrom, interpret } from "xstate"
-import { canDrawDeckCard, canDrawTrashCard, canDropCard, canJoin, canLeave, canPutCard, canPutCards, canStartGame, isWinningDrop } from "./guards"
-import { drawDeckCard, drawTrashCard, dropCard, joinGame, leaveGame, moveCard, putCard, putCards, startGame, switchPlayer } from "./actions"
+import { canDrawDeckCard, canDrawTrashCard, canDropCard, canJoin, canLeave, canPutCard, canPutCards, canStartGame, isWinningGameDrop, isWinningRoundDrop } from "./guards"
+import { calculateScores, drawDeckCard, drawTrashCard, dropCard, joinGame, leaveGame, moveCard, putCard, putCards, startGame, startRound, switchPlayer } from "./actions"
 
 export const GameModel = createModel({
     players: [] as Player[],
@@ -24,6 +24,7 @@ export const GameModel = createModel({
         moveCard: (playerId: Player["id"], from: number, to: number) => ({ playerId, from, to }),
         putCards: (playerId: Player["id"]) => ({ playerId }),
         putCard: (playerId: Player["id"], from: number, to: number) => ({ playerId, from, to }),
+        continue: () => ({}),
         restart: () => ({})
     }
 })
@@ -49,7 +50,7 @@ export const GameMachine = GameModel.createMachine({
                 start: {
                     cond: canStartGame,
                     target: GameStates.PLAY,
-                    actions: [GameModel.assign(startGame)]
+                    actions: [GameModel.assign(startGame), GameModel.assign(startRound)]
                 }
             }
         },
@@ -67,9 +68,14 @@ export const GameMachine = GameModel.createMachine({
                 },
                 dropCard: [
                     {
-                        cond: isWinningDrop,
-                        target: GameStates.VICTORY,
-                        actions: [GameModel.assign(dropCard)]
+                        cond: isWinningGameDrop,
+                        target: GameStates.GAME_VICTORY,
+                        actions: [GameModel.assign(dropCard), GameModel.assign(calculateScores)]
+                    },
+                    {
+                        cond: isWinningRoundDrop,
+                        target: GameStates.ROUND_VICTORY,
+                        actions: [GameModel.assign(dropCard), GameModel.assign(calculateScores)]
                     }, {
                         cond: canDropCard,
                         target: GameStates.PLAY,
@@ -92,11 +98,19 @@ export const GameMachine = GameModel.createMachine({
                 }
             }
         },
-        [GameStates.VICTORY]: {
+        [GameStates.ROUND_VICTORY]: {
+            on: {
+                continue: {
+                    target: GameStates.PLAY,
+                    actions: [GameModel.assign(startRound)]
+                }
+            }
+        },
+        [GameStates.GAME_VICTORY]: {
             on: {
                 restart: {
                     target: GameStates.LOBBY,
-                    actions: []
+                    actions: [GameModel.assign(startGame), GameModel.assign(startRound)]
                 }
             }
         }

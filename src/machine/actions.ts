@@ -1,4 +1,4 @@
-import { check, currentPlayer, getTwoDecksShuffled, numberOfCardsNeeded, roundType } from "../func/game";
+import { check, currentPlayer, getScore, getTwoDecksShuffled, numberOfCardsNeeded, roundType, shuffle } from "../func/game";
 import { DeckType, GameAction, GameCard, GameContext } from "../types";
 
 export const joinGame: GameAction<"join"> = (context, event) => ({
@@ -16,29 +16,50 @@ export const switchPlayer = (context: GameContext) => ({
 })
 
 export const startGame = (context: GameContext) => {
+    let players = context.players;
+    players.forEach((p) => p.score = 0);
+
+    return {
+        players: shuffle(players),
+        round: 1
+    }
+}
+
+export const startRound = (context: GameContext) => {
     let gameDeck = getTwoDecksShuffled();
     let players = context.players;
+    let round = context.round + 1;
+
+    players.forEach((p) => {
+        p.cards = [];
+        p.hasPutCards = false;
+    });
 
     for (let i = 0; i < 11; i++) {
         players.forEach((p) => p.cards.push(gameDeck.pop()!));
     }
 
     let trashCard = gameDeck.pop();
-    let randomPlayer = players[Math.floor(Math.random() * context.players.length)]!.id;
 
     //TODO: à supprimer
     let pl = players.find((p) => p.name === "PL")!;
-    randomPlayer = pl.id;
-    pl.cards = [{ suit: "spades", value: "A" }, { suit: "diams", value: "A" }, { suit: "clubs", value: "A" }, { suit: "spades", value: "A" }, { suit: "diams", value: "A" }, { suit: "clubs", value: "A" }, { suit: "hearts", value: "A" }];
+    let eme = players.find((p) => p.name === "Emeline")!;
+
+
+    let cards = [{ suit: "spades", value: "A" }, { suit: "diams", value: "A" }, { suit: "clubs", value: "A" }, { suit: "spades", value: "A" }, { suit: "diams", value: "A" }, { suit: "clubs", value: "A" }];
+    cards.forEach((c, i) => pl.cards[i] = c);
+
+    cards = [{ suit: "spades", value: "2" }, { suit: "spades", value: "3" }, { suit: "spades", value: "4" }, { suit: "spades", value: "5" }, { suit: "diams", value: "A" }, { suit: "clubs", value: "A" }, { suit: "hearts", value: "A" }, { suit: "spades", value: "A" }];
+    cards.forEach((c, i) => eme.cards[i] = c);
 
     return {
         players: players,
-        currentPlayer: randomPlayer,
+        currentPlayer: players[round % 2].id,
         doesCurrentPlayerTakeCard: false,
         trashCard: trashCard,
         deck: gameDeck,
         board: [],
-        round: context.round + 1
+        round: round
     }
 }
 
@@ -138,7 +159,17 @@ export const putCard: GameAction<"putCard"> = (context, event) => {
     };
 }
 
-export const calculateScores: GameAction<"dropCard"> = (context, event) => {
-    console.log("scores")
-    return {};
+export const calculateScores: GameAction<"dropCard"> = (context) => {
+    let players = context.players;
+
+    players.forEach((p) => {
+        let cards = p.cards;
+        let scores = cards.map((c) => getScore(c));
+        let sum = scores.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+        p.score += sum;
+    });
+
+    return {
+        players: players
+    };
 }

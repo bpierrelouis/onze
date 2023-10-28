@@ -26,18 +26,34 @@ body {
     flex-direction: row;
 }
 
-.hand.size-3 {
-    width: 6.9em;
-}
-
-.hand.size-4 {
-    width: 130px;
-}
-
 #root ul:is(.hand, .table) {
     margin-bottom: 0;
 }
 
 #root ul:is(.hand, .table):not(:first-child) {
     margin-left: 1em;
+}
+
+.hand.size-3 {
+    width: 7em;
+}
+
+.hand.size-4 {
+    width: 8em;
+}
+
+.hand.size-5 {
+    width: 9em;
+}
+
+.hand.size-6 {
+    width: 10em;
+}
+
+.hand.size-7 {
+    width: 11em;
+}
+
+.hand.size-8 {
+    width: 12em;
 }

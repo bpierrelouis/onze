@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useGame } from "../hooks/useGame"
-import { Board } from "../component/Board"
+import { CardBoard } from "../component/CardBoard"
 import { PlayerHand } from "../component/PlayerHand"
 
 export function PlayScreen() {
@@ -21,10 +21,11 @@ export function PlayScreen() {
             return;
         }
         send({ type: "putCard", from: selected, to: i });
+        setSelected(undefined);
     }
 
     return <div className="playingCards">
-        <Board trashClick={trashClick} onClick={putCard} />
+        <CardBoard trashClick={trashClick} onClick={putCard} />
         <PlayerHand selected={selected} setSelected={setSelected} />
     </div>
 }

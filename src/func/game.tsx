@@ -20,7 +20,7 @@ function getDeck() {
 
     return deck;
 }
-function shuffle(array: GameCard[]) {
+export function shuffle<T>(array: Array<T>) {
     let currentIndex = array.length, randomIndex;
 
     // While there remain elements to shuffle.
@@ -37,11 +37,7 @@ function shuffle(array: GameCard[]) {
     return array;
 }
 export function getTwoDecksShuffled(): GameCard[] {
-    let deck: GameCard[];
-    deck = getDeck();
-    getDeck().forEach((card) => deck.push(card));
-    deck = shuffle(deck);
-    return deck;
+    return shuffle([...getDeck(), ...getDeck()]);
 }
 
 export function symbole(card: GameCard) {
@@ -95,7 +91,7 @@ function isSuite(cards: GameCard[]): boolean {
         return false;
     }
 
-    let expected = [0, 1, 2, 3].map((e) => e + valueIndexes[0]);
+    let expected = cards.map((_, i) => i + valueIndexes[0]);
 
     if (expected[cards.length - 1] === cardValues.length) {
         expected[cards.length - 1] = 0;
@@ -127,4 +123,15 @@ export function groupCard(round: GameContext["round"], cards: GameCard[]): GameC
     }
 
     return list;
+}
+
+export function getScore(card: GameCard): number {
+    let value = cardValues.indexOf(card.value) + 1;
+    if ([2, 3].includes(value)) { return 0; }
+    if (value > 10) { return 10; }
+    return value;
+}
+
+export function getDeckScore(cards: GameCard[]): number {
+    return cards.map((c) => getScore(c)).reduce((sum, current) => sum + current, 0);
 }

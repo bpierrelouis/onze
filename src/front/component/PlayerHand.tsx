@@ -25,6 +25,10 @@ export function PlayerHand({ selected, setSelected }: { selected?: number, setSe
         send({ type: "moveCard", from: selected, to: i });
         setSelected(undefined);
     }
+    const putCards = () => {
+        send({ type: "putCards" });
+        setSelected(undefined);
+    }
 
     const cardElement = (i: number, card: GameCard) => <li key={i}><Card key={i} card={card} active={i === selected} onClick={() => choseCard(i)} /></li>;
 
@@ -48,7 +52,7 @@ export function PlayerHand({ selected, setSelected }: { selected?: number, setSe
     return <>
         {!player.hasPutCards && <>
             <button onClick={prevent(() => setShowOneDeck(!showOneDeck))}>{showOneDeck ? "Séparer" : "Regrouper"} le paquet</button>
-            {(can({ type: "putCards" }) && !showOneDeck) && <button onClick={prevent(() => send({ type: "putCards" }))}>Poser</button>}
+            {(can({ type: "putCards" }) && !showOneDeck) && <button onClick={prevent(putCards)}>Poser</button>}
         </>}
         <div id="player" className="decks">{playerHand}</div>
     </>
