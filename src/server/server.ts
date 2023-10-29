@@ -12,6 +12,7 @@ import { publishMachine } from "./func/socket"
 import { readFileSync } from "fs"
 import FastifyView from "@fastify/view"
 import ejs from "ejs"
+import rateLimit from "@fastify/rate-limit"
 
 const connections = new ConnectionRepository()
 const games = new GameRepository(connections)
@@ -23,6 +24,12 @@ try {
 } catch (e) { }
 
 const fastify = Fastify({ logger: true })
+
+fastify.register(rateLimit, {
+    global: true,
+    max: 2,
+    timeWindow: 1000
+})
 fastify.register(FastifyView, {
     engine: {
         ejs: ejs
@@ -32,6 +39,7 @@ fastify.register(FastifyStatic, {
     root: resolve("./public")
 })
 fastify.register(FastifyWebsocket)
+
 fastify.register(async (f) => {
     f.get("/ws", { websocket: true }, (connection, req) => {
         const query = req.query as Record<string, string>
