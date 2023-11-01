@@ -42,6 +42,6 @@ A tour de rôle, les joueurs doivent:
 - s'il a déjà poser ses cartes, il peut compléter les brelans ou les suites. Il peut compléter les siens si et seulement s'il ne vient pas de poser ses cartes ;
 - placer une carte dans la défausse.
 
-Si un joueur, après avoir fini son tour, la somme des points de ses cartes vaut 0, la manche s'arrête. Tout les joueurs font la somme des points de leurs cartes et l'ajoute à leur score.
+Après avoir jeter une carte, si la somme des points des cartes du joueur vaut 0, la manche s'arrête. Tout les joueurs font la somme des points de leurs cartes et l'ajoute à leur score.
 
 Une fois que le joueur à piocher sa carte, les autres joueurs sont autorisés à récupérer la carte de la défausse si et seulement si elle n'a pas déjà été recouverte.
