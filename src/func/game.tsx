@@ -61,9 +61,6 @@ export function numberOfCardsNeeded(type: DeckType): number {
 }
 
 function isBrelan(cards: Card[]): boolean {
-    // si il y a le bon nombre de carte
-    if (![3, 4].includes(cards.length)) { return false; }
-
     const values = cards.map((c) => c.value);
     const suits = cards.map((c) => c.suit);
 
@@ -75,8 +72,8 @@ function isBrelan(cards: Card[]): boolean {
     // si toutes les cartes sont des jokers
     if ((suitsSet.size === 1) && (suits[0] === null)) { return true; }
 
-    // si toutes les cartes sont de couleur différente
-    return suitsSet.size === cards.length;
+    // si les cartes sont de 3 couleurs differentes
+    return suitsSet.size === 3;
 }
 
 function isSuite(cards: Card[]): boolean {

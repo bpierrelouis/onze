@@ -58,7 +58,11 @@ export const canPutCards: GameGuard<"putCards"> = (context, event) => {
 }
 
 export const canPutCard: GameGuard<"putCard"> = (context, event) => {
-    if (!((context.currentPlayer === event.playerId) && context.doesCurrentPlayerTakeCard && !context.hasPlayerJustPutCards)) {
+    if (!((context.currentPlayer === event.playerId) && context.doesCurrentPlayerTakeCard)) {
+        return false;
+    }
+
+    if (!(!context.hasPlayerJustPutCards || (event.to < (context.board.length - roundType(context.round).length)))) {
         return false;
     }
 

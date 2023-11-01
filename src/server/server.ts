@@ -12,7 +12,7 @@ import { publishMachine } from "./func/socket"
 import { readFileSync } from "fs"
 import FastifyView from "@fastify/view"
 import ejs from "ejs"
-import rateLimit from "@fastify/rate-limit"
+// import rateLimit from "@fastify/rate-limit"
 
 const connections = new ConnectionRepository()
 const games = new GameRepository(connections)
@@ -25,11 +25,11 @@ try {
 
 const fastify = Fastify({ logger: true })
 
-fastify.register(rateLimit, {
-    global: true,
-    max: 2,
-    timeWindow: 1000
-})
+// fastify.register(rateLimit, {
+//     global: true,
+//     max: 10,
+//     timeWindow: 1000
+// })
 fastify.register(FastifyView, {
     engine: {
         ejs: ejs
