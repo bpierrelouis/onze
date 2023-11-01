@@ -5,8 +5,8 @@
   <% if(env==="prod" ) { %>
   <script defer src="/assets/<%= manifest['index.html'].file %>"></script>
   <link rel="stylesheet" href="/assets/<%= manifest['index.html'].css[0] %>">
-  <link href="/<%= manifest['templates/favicon-dark.png'].file %>" rel="icon" media="(prefers-color-scheme: light)" />
-  <link href="/<%= manifest['templates/favicon-light.png'].file %>" rel="icon" media="(prefers-color-scheme: dark)" />
+  <link href="/assets/<%= manifest['templates/favicon-dark.png'].file %>" rel="icon" media="(prefers-color-scheme: light)" />
+  <link href="/assets/<%= manifest['templates/favicon-light.png'].file %>" rel="icon" media="(prefers-color-scheme: dark)" />
   <% } else { %>
   <script type="module" src="http://localhost:5173/@vite/client"></script>
   <script type="module">
