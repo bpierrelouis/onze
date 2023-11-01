@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { GameCard } from "../../types";
+import { Card } from "../../types";
 import { getSession } from "../func/session";
 import { useGame } from "../hooks/useGame";
-import { Card } from "./Card";
+import { CardView } from "./CardView";
 import { prevent } from "../../func/dom";
 import { groupCard } from "../../func/game";
 
@@ -30,7 +30,7 @@ export function PlayerHand({ selected, setSelected }: { selected?: number, setSe
         setSelected(undefined);
     }
 
-    const cardElement = (i: number, card: GameCard) => <li key={i}><Card key={i} card={card} active={i === selected} onClick={() => choseCard(i)} /></li>;
+    const cardElement = (i: number, card: Card) => <li key={i}><CardView key={i} card={card} active={i === selected} onClick={() => choseCard(i)} /></li>;
 
     let playerHand = [];
     if (showOneDeck || player.hasPutCards) {

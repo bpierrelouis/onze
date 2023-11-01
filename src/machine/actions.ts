@@ -1,5 +1,5 @@
-import { check, currentPlayer, getScore, getTwoDecksShuffled, numberOfCardsNeeded, roundType, shuffle } from "../func/game";
-import { DeckType, GameAction, GameCard, GameContext } from "../types";
+import { check, currentPlayer, numberOfCardsNeeded, roundType, shuffle } from "../func/game";
+import { DeckType, GameAction, Card, GameContext } from "../types";
 
 export const joinGame: GameAction<"join"> = (context, event) => ({
     players: [...context.players, { id: event.playerId, name: event.name, cards: [], hasPutCards: false, score: 0 }]
@@ -21,12 +21,12 @@ export const startGame = (context: GameContext) => {
 
     return {
         players: shuffle(players),
-        round: 1
+        round: 0
     }
 }
 
 export const startRound = (context: GameContext) => {
-    let gameDeck = getTwoDecksShuffled();
+    let gameDeck = shuffle([...Card.get54CardsDeck(), ...Card.get54CardsDeck()]);
     let players = context.players;
     let round = context.round + 1;
 
@@ -41,20 +41,9 @@ export const startRound = (context: GameContext) => {
 
     let trashCard = gameDeck.pop();
 
-    //TODO: à supprimer
-    let pl = players.find((p) => p.name === "PL")!;
-    let eme = players.find((p) => p.name === "Emeline")!;
-
-
-    let cards = [{ suit: "spades", value: "A" }, { suit: "diams", value: "A" }, { suit: "clubs", value: "A" }, { suit: "spades", value: "A" }, { suit: "diams", value: "A" }, { suit: "clubs", value: "A" }];
-    cards.forEach((c, i) => pl.cards[i] = c);
-
-    cards = [{ suit: "spades", value: "2" }, { suit: "spades", value: "3" }, { suit: "spades", value: "4" }, { suit: "spades", value: "5" }, { suit: "diams", value: "A" }, { suit: "clubs", value: "A" }, { suit: "hearts", value: "A" }, { suit: "spades", value: "A" }];
-    cards.forEach((c, i) => eme.cards[i] = c);
-
     return {
         players: players,
-        currentPlayer: players[round % 2].id,
+        currentPlayer: players[round % players.length].id,
         doesCurrentPlayerTakeCard: false,
         trashCard: trashCard,
         deck: gameDeck,
@@ -107,7 +96,7 @@ export const moveCard: GameAction<"moveCard"> = (context, event) => {
 }
 
 export const putCards: GameAction<"putCards"> = (context, event) => {
-    let board: GameCard[][] = [];
+    let board: Card[][] = [];
     let player = currentPlayer(context);
     let cards = [...player.cards];
 
@@ -164,7 +153,7 @@ export const calculateScores: GameAction<"dropCard"> = (context) => {
 
     players.forEach((p) => {
         let cards = p.cards;
-        let scores = cards.map((c) => getScore(c));
+        let scores = cards.map((c) => c.score);
         let sum = scores.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
         p.score += sum;
     });

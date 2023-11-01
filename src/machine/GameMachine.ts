@@ -1,5 +1,5 @@
 import { createModel } from "xstate/lib/model"
-import { GameCard, GameContext, GameStates, Player } from "../types"
+import { Card, GameContext, GameStates, Player } from "../types"
 import { InterpreterFrom, interpret } from "xstate"
 import { canDrawDeckCard, canDrawTrashCard, canDropCard, canJoin, canLeave, canPutCard, canPutCards, canStartGame, isWinningGameDrop, isWinningRoundDrop } from "./guards"
 import { calculateScores, drawDeckCard, drawTrashCard, dropCard, joinGame, leaveGame, moveCard, putCard, putCards, startGame, startRound, switchPlayer } from "./actions"
@@ -8,9 +8,9 @@ export const GameModel = createModel({
     players: [] as Player[],
     currentPlayer: null as null | Player["id"],
     doesCurrentPlayerTakeCard: false as boolean,
-    trashCard: null as GameCard | null,
-    deck: [] as GameCard[],
-    board: [] as GameCard[][],
+    trashCard: null as Card | null,
+    deck: [] as Card[],
+    board: [] as Card[][],
     round: 0 as number,
     hasPlayerJustPutCards: false as boolean
 }, {

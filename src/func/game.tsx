@@ -1,4 +1,4 @@
-import { DeckType, GameCard, GameContext, Player, cardSuits, cardValues } from "../types";
+import { DeckType, Card, GameContext, Player, CardSuit, CardValue } from "../types";
 
 export function currentPlayer(context: GameContext): Player {
     const player = context.players.find(p => p.id === context.currentPlayer)
@@ -8,18 +8,6 @@ export function currentPlayer(context: GameContext): Player {
     return player
 }
 
-function getDeck() {
-    let deck = [] as GameCard[];
-
-    for (let suit of cardSuits) {
-        for (let value of cardValues) {
-            let card = { suit: suit, value: value };
-            deck.push(card);
-        }
-    }
-
-    return deck;
-}
 export function shuffle<T>(array: Array<T>) {
     let currentIndex = array.length, randomIndex;
 
@@ -36,23 +24,23 @@ export function shuffle<T>(array: Array<T>) {
 
     return array;
 }
-export function getTwoDecksShuffled(): GameCard[] {
-    return shuffle([...getDeck(), ...getDeck()]);
-}
 
-export function symbole(card: GameCard) {
-    switch (card.suit) {
-        case "diams": return <>&diams;</>;
-        case "spades": return <>&spades;</>;
-        case "clubs": return <>&clubs;</>;
-        case "hearts": return <>&hearts;</>;
+export function getCardSymbole(card: Card): JSX.Element {
+    if (card.suit === null) { return <>Joker</>; }
+    switch (card.suit!) {
+        case CardSuit.DIAMS: return <>&diams;</>;
+        case CardSuit.SPADES: return <>&spades;</>;
+        case CardSuit.CLUBS: return <>&clubs;</>;
+        case CardSuit.HEARTS: return <>&hearts;</>;
     }
 }
-export function className(card: GameCard) {
-    let className = "card rank-";
-    className += card.value.toLowerCase();
+
+export function getCardClassName(card: Card): string {
+    let className = "card ";
+    if (card.suit === null) { return className + "little joker"; }
+    className += "rank-" + card.value!.toLowerCase();
     className += " ";
-    className += card.suit;
+    className += card.suit!;
     return className;
 }
 
@@ -72,46 +60,76 @@ export function numberOfCardsNeeded(type: DeckType): number {
     return (type === DeckType.BRELAN) ? 3 : 4;
 }
 
-function isBrelan(cards: GameCard[]): boolean {
+function isBrelan(cards: Card[]): boolean {
+    // si il y a le bon nombre de carte
+    if (![3, 4].includes(cards.length)) { return false; }
+
     const values = cards.map((c) => c.value);
     const suits = cards.map((c) => c.suit);
 
-    if ((new Set(values)).size !== 1) {
-        return false;
-    }
-    return (new Set(suits)).size === cards.length;
+    // si toutes les cartes ont la meme hauteur
+    if ((new Set(values)).size !== 1) { return false; }
+
+    const suitsSet = new Set(suits);
+
+    // si toutes les cartes sont des jokers
+    if ((suitsSet.size === 1) && (suits[0] === null)) { return true; }
+
+    // si toutes les cartes sont de couleur différente
+    return suitsSet.size === cards.length;
 }
 
-function isSuite(cards: GameCard[]): boolean {
-    const suits = cards.map((c) => c.suit);
-    const values = cards.map((c) => c.value);
-    const valueIndexes = values.map((v) => cardValues.indexOf(v));
+function isSuite(cards: Card[]): boolean {
+    if (cards.length < 4) { return false; }
 
-    if ((new Set(suits)).size !== 1) {
-        return false;
+    // si les cartes sont de même couleur + joker
+    const suits = cards.map((c) => c.suit);
+    const numberOfSuits = (new Set(suits)).size;
+    if (!((numberOfSuits === 1) || (numberOfSuits === 2 && suits.includes(null)))) { return false; }
+
+    const values = cards.map((c) => c.value);
+    const cardValues = Object.values(CardValue);
+    let indexOfValues: number[] = [];
+    for (let v of values) {
+        if (v === null) {
+            const indexesLength = indexOfValues.length;
+            if ((indexesLength === 0) || (indexOfValues[indexesLength - 1] === -1)) {
+                indexOfValues.push(-1);
+            } else {
+                indexOfValues.push(indexOfValues[indexesLength - 1] + 1);
+            }
+        } else {
+            indexOfValues.push(cardValues.indexOf(v));
+        }
     }
 
-    let expected = cards.map((_, i) => i + valueIndexes[0]);
+    let lastIndexOfUnknowValue = indexOfValues.lastIndexOf(-1);
+    while (lastIndexOfUnknowValue > -1) {
+        indexOfValues[lastIndexOfUnknowValue] = indexOfValues[lastIndexOfUnknowValue + 1] - 1;
+        lastIndexOfUnknowValue = indexOfValues.lastIndexOf(-1);
+    }
 
-    if (expected[cards.length - 1] === cardValues.length) {
+    let expected = cards.map((_, i) => i + indexOfValues[0]);
+
+    if (expected[cards.length - 1] === Object.values(CardValue).length) {
         expected[cards.length - 1] = 0;
     }
 
-    return valueIndexes.every((v, i) => v === expected[i]);
+    return indexOfValues.every((v, i) => v === expected[i]);
 }
 
-export function check(cards: GameCard[], type: DeckType): boolean {
+export function check(cards: Card[], type: DeckType): boolean {
     return (type === DeckType.BRELAN) ? isBrelan(cards) : isSuite(cards);
 }
 
-export function groupCard(round: GameContext["round"], cards: GameCard[]): GameCard[][] {
+export function groupCard(round: GameContext["round"], cards: Card[]): Card[][] {
     let copy = cards.slice();
     const numberOfCards = roundType(round).map((t) => numberOfCardsNeeded(t));
 
-    let list: GameCard[][] = [];
+    let list: Card[][] = [];
 
     for (let number of numberOfCards) {
-        let sublist: GameCard[] = [];
+        let sublist: Card[] = [];
         for (let i = 0; i < number; i++) {
             sublist.push(copy.shift()!);
         }
@@ -125,13 +143,6 @@ export function groupCard(round: GameContext["round"], cards: GameCard[]): GameC
     return list;
 }
 
-export function getScore(card: GameCard): number {
-    let value = cardValues.indexOf(card.value) + 1;
-    if ([2, 3].includes(value)) { return 0; }
-    if (value > 10) { return 10; }
-    return value;
-}
-
-export function getDeckScore(cards: GameCard[]): number {
-    return cards.map((c) => getScore(c)).reduce((sum, current) => sum + current, 0);
+export function getDeckScore(cards: Card[]): number {
+    return cards.map((c) => c.score).reduce((sum, current) => sum + current, 0);
 }

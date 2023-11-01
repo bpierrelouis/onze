@@ -85,9 +85,10 @@ export const isWinningRoundDrop: GameGuard<"dropCard"> = (context, event) => {
     let cards = currentPlayer(context).cards.slice();
     // suppression de la carte à jeter
     cards = cards.filter((_, i) => i !== event.index);
-    // suppression des 2 et des 3
-    cards = cards.filter((c) => !["2", "3"].includes(c.value));
-    return cards.length === 0;
+    // on regarde si le score de la main vaut 0
+    let scores = cards.map((c) => c.score);
+    let score = scores.reduce((sum, current) => sum + current, 0);
+    return score === 0;
 }
 
 export const isLastRound = (context: GameContext) => {

@@ -57,3 +57,8 @@ body {
 .hand.size-8 {
     width: 12em;
 }
+
+#scores {
+    background-color: white;
+    padding: 1em 2em;
+}
