@@ -15,6 +15,8 @@ import "./selfthinker-CSS-Playing-Cards/faces/KC.gif"
 import "./selfthinker-CSS-Playing-Cards/faces/KD.gif"
 import "./selfthinker-CSS-Playing-Cards/faces/KH.gif"
 import "./selfthinker-CSS-Playing-Cards/faces/KS.gif"
+import "./../../templates/favicon-dark.png"
+import "./../../templates/favicon-light.png"
 import { GameContextProvider } from './hooks/useGame.tsx'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
