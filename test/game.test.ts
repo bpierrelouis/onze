@@ -48,6 +48,14 @@ it("should be brelan", () => {
     expect(check(cards, DeckType.BRELAN)).toBe(true);
 
     cards = [
+        Card.init(CardSuit.CLUBS, CardValue.AS),
+        Card.init(CardSuit.HEARTS, CardValue.AS),
+        Card.init(CardSuit.SPADES, CardValue.AS),
+        Card.init(CardSuit.SPADES, CardValue.AS)
+    ];
+    expect(check(cards, DeckType.BRELAN)).toBe(true);
+
+    cards = [
         Card.joker,
         Card.joker,
         Card.joker
