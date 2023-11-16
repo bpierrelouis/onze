@@ -8,7 +8,7 @@ export default defineConfig({
     manifest: true,
     minify: true,
     target: "ES2021",
-    outDir: "./public/assets",
+    outDir: "./public",
     assetsDir: ""
   }
 })

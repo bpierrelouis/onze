@@ -12,24 +12,18 @@ import { publishMachine } from "./func/socket"
 import { readFileSync } from "fs"
 import FastifyView from "@fastify/view"
 import ejs from "ejs"
-// import rateLimit from "@fastify/rate-limit"
 
 const connections = new ConnectionRepository()
 const games = new GameRepository(connections)
 const env = process.env.NODE_ENV as "dev" | "prod"
 let manifest = {}
 try {
-    const manifestData = readFileSync("./public/assets/manifest.json")
+    const manifestData = readFileSync("./public/manifest.json")
     manifest = JSON.parse(manifestData.toLocaleString())
 } catch (e) { }
 
 const fastify = Fastify({ logger: true })
 
-// fastify.register(rateLimit, {
-//     global: true,
-//     max: 10,
-//     timeWindow: 1000
-// })
 fastify.register(FastifyView, {
     engine: {
         ejs: ejs
@@ -96,11 +90,11 @@ fastify.post("/api/players", (_req, res) => {
 })
 
 fastify.listen({
-    port: process.env.PORT ? parseInt(process.env.PORT, 10) : 8000,
+    port: process.env.PORT ? parseInt(process.env.PORT, 10) : 5000,
     host: "0.0.0.0"
 }).catch((err) => {
     fastify.log.error(err)
     process.exit(1)
 }).then(() => {
-    fastify.log.info("Le serveur ecoute sur le port 8000.")
+    fastify.log.info("Le serveur ecoute sur le port 5000.")
 })
