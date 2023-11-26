@@ -87,7 +87,7 @@ fastify.post("/api/players", (_req, res) => {
 })
 
 fastify.listen({
-    port: process.env.PORT ? parseInt(process.env.PORT, 10) : 8000,
+    port: process.env.PORT ? parseInt(process.env.PORT, 10) : 8080,
     host: "0.0.0.0"
 }).catch((err) => {
     fastify.log.error(err)
