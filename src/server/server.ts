@@ -15,7 +15,6 @@ import ejs from "ejs"
 
 const connections = new ConnectionRepository()
 const games = new GameRepository(connections)
-const env = process.env.NODE_ENV as "dev" | "prod"
 let manifest = {}
 try {
     const manifestData = readFileSync("./public/manifest.json")
@@ -25,9 +24,7 @@ try {
 const fastify = Fastify({ logger: true })
 
 fastify.register(FastifyView, {
-    engine: {
-        ejs: ejs
-    }
+    engine: { ejs: ejs }
 })
 fastify.register(FastifyStatic, {
     root: resolve("./public")
@@ -77,7 +74,7 @@ fastify.register(async (f) => {
 })
 
 fastify.get("/", (_req, res) => {
-    res.view("/templates/index.ejs", { manifest, env })
+    res.view("/templates/index.ejs", { manifest })
 })
 
 fastify.post("/api/players", (_req, res) => {
@@ -90,11 +87,9 @@ fastify.post("/api/players", (_req, res) => {
 })
 
 fastify.listen({
-    port: process.env.PORT ? parseInt(process.env.PORT, 10) : 5000,
+    port: process.env.PORT ? parseInt(process.env.PORT, 10) : 8000,
     host: "0.0.0.0"
 }).catch((err) => {
     fastify.log.error(err)
     process.exit(1)
-}).then(() => {
-    fastify.log.info("Le serveur ecoute sur le port 5000.")
-})
+}).then(() => { })

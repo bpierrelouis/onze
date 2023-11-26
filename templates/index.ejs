@@ -2,21 +2,10 @@
 <html lang="en">
 
 <head>
-  <% if(env==="prod" ) { %>
-  <script defer src="/assets/<%= manifest['index.html'].file %>"></script>
-  <link rel="stylesheet" href="/assets/<%= manifest['index.html'].css[0] %>">
-  <link href="/assets/<%= manifest['templates/favicon-dark.png'].file %>" rel="icon" media="(prefers-color-scheme: light)" />
-  <link href="/assets/<%= manifest['templates/favicon-light.png'].file %>" rel="icon" media="(prefers-color-scheme: dark)" />
-  <% } else { %>
-  <script type="module" src="http://localhost:5173/@vite/client"></script>
-  <script type="module">
-    import RefreshRuntime from "http://localhost:5173/@react-refresh"
-    RefreshRuntime.injectIntoGlobalHook(window)
-    window.$RefreshReg$ = () => {}
-    window.$RefreshSig$ = () => (type) => type
-    window.__vite_plugin_react_preamble_installed__ = true
-  </script>
-  <% } %>
+  <script defer src="/<%= manifest['index.html'].file %>"></script>
+  <link rel="stylesheet" href="/<%= manifest['index.html'].css[0] %>">
+  <link href="/<%= manifest['templates/favicon-dark.png'].file %>" rel="icon" media="(prefers-color-scheme: light)" />
+  <link href="/<%= manifest['templates/favicon-light.png'].file %>" rel="icon" media="(prefers-color-scheme: dark)" />
 
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -25,9 +14,6 @@
 
 <body>
   <div id="root"></div>
-  <% if (env !=="prod" ) { %>
-  <script type="module" src="http://localhost:5173/src/front/main.tsx"></script>
-  <% } %>
 </body>
 
 </html>

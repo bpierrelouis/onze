@@ -9,6 +9,6 @@ export default defineConfig({
     minify: true,
     target: "ES2021",
     outDir: "./public",
-    assetsDir: ""
+    assetsDir: "assets"
   }
 })
