@@ -30,7 +30,7 @@ Le brelan est constitué de 3 cartes de même hauteur de couleur différente. Le
 La suite contient 4 cartes de la même couleur dont les hauteurs se suivent. Les jokers peuvent substituer les cartes d'une suite. L'as peut être utilisé avant le 2 ou après le roi. Il est interdit de continuer après l'as.
 
 # Completer le jeu
-- Le brelan peut être compléter avec la couleur manquante de même hauteur.
+- Le brelan peut être compléter avec les couleurs déjà présentes de même hauteur.
 - La suite peut être compléter sans dépasser l'as des deux côtés. Le joker substitue la valeur de la carte.
 
 # Déroulé d'une manche
