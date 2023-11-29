@@ -86,7 +86,8 @@ export type Player = {
     name: string,
     cards: Card[],
     hasPutCards: boolean,
-    score: number
+    score: number,
+    position?: number
 }
 
 export enum DeckType {

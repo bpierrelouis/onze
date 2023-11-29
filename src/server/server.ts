@@ -60,9 +60,8 @@ fastify.register(async (f) => {
 
         connection.socket.on("message", (rawMessage) => {
             const message = JSON.parse(rawMessage.toLocaleString())
-            if (message.type === "gameUpdate") {
-                game.send(message.event)
-            }
+            if (message.type !== "gameUpdate") { return }
+            game.send(message.event)
         })
 
         connection.socket.on("close", () => {

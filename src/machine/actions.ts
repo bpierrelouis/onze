@@ -17,10 +17,15 @@ export const switchPlayer = (context: GameContext) => ({
 
 export const startGame = (context: GameContext) => {
     let players = context.players;
-    players.forEach((p) => p.score = 0);
+    players = shuffle(players);
+
+    players.forEach((p, i) => {
+        p.score = 0;
+        p.position = i;
+    });
 
     return {
-        players: shuffle(players),
+        players: players,
         round: 0
     }
 }
@@ -29,6 +34,7 @@ export const startRound = (context: GameContext) => {
     let gameDeck = shuffle([...Card.get54CardsDeck(), ...Card.get54CardsDeck()]);
     let players = context.players;
     let round = context.round + 1;
+    const beginner = players.find((p) => p.position === (round % players.length));
 
     players.forEach((p) => {
         p.cards = [];
@@ -43,7 +49,7 @@ export const startRound = (context: GameContext) => {
 
     return {
         players: players,
-        currentPlayer: players[round % players.length].id,
+        currentPlayer: beginner!.id,
         doesCurrentPlayerTakeCard: false,
         trashCard: trashCard,
         deck: gameDeck,
