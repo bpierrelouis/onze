@@ -1,5 +1,4 @@
 import { GameStates } from "../types"
-import { GameInfo } from "./component/GameInfo"
 import { ScoresBoard } from "./component/ScoresBoard"
 import { useGame } from "./hooks/useGame"
 import { LobbyScreen } from "./screens/LobbyScreen"
@@ -18,7 +17,6 @@ function App() {
 
     return <>
         {state === GameStates.LOBBY && <LobbyScreen />}
-        {state === GameStates.PLAY && <GameInfo />}
         {[GameStates.ROUND_VICTORY, GameStates.GAME_VICTORY].includes(state) && <VictoryScreen />}
 
         {showBoard && <>

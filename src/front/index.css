@@ -1,64 +1,119 @@
-html,
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+
+*:not(.card) {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Quicksand', sans-serif;
+}
+
 body {
-    font-family: sans-serif;
-    background-color: #492;
+    background: #e5e5e5;
 }
 
-#root .card.empty {
-    background: transparent;
-    box-shadow: none;
+section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 40px;
+
+    padding: 40px;
+    border-radius: 4px;
+    background: #14213d;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 9);
 }
 
-.card {
+section.center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 400px;
+}
+
+section h2 {
+    font-size: 2em;
+    color: #fca311;
+    text-transform: uppercase;
+}
+
+section form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+section form .inputBox {
+    position: relative;
+    width: 100%;
+}
+
+section form input {
+    position: relative;
+    width: 100%;
+    background: #e5e5e5;
+    border: none;
+    outline: none;
+    padding: 25px 10px 7.5px;
+    border-radius: 4px;
+    color: #14213d;
+    font-weight: 500;
+    font-size: 1em;
+}
+
+section form .inputBox i {
+    position: absolute;
+    left: 0;
+    padding: 15px 10px;
+    font-style: normal;
+    color: #14213d;
+    transition: 0.5s;
+    pointer-events: none;
+}
+
+section form .inputBox input:focus~i,
+section form .inputBox input:valid~i {
+    transform: translateY(-7.5px);
+    font-size: 0.8em;
+    color: #14213d;
+}
+
+section form input[type="submit"] {
+    padding: 10px;
+    background: #fca311;
+    color: #14213d;
+    font-weight: 600;
+    font-size: 1.35em;
+    letter-spacing: 0.05em;
     cursor: pointer;
 }
 
-.card.active {
-    transform: translateY(-20%);
+section input[type="submit"]:active {
+    opacity: 0.6;
 }
 
-#player .card:hover {
-    transform: translateY(-20%);
+section .error {
+    color: #fca311;
+    text-align: center;
 }
 
-.decks {
+#joueurs {
+    list-style-type: none;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    gap: 5px;
 }
 
-#root ul:is(.hand, .table) {
-    margin-bottom: 0;
-}
-
-#root ul:is(.hand, .table):not(:first-child) {
-    margin-left: 1em;
-}
-
-.hand.size-3 {
-    width: 7em;
-}
-
-.hand.size-4 {
-    width: 8em;
-}
-
-.hand.size-5 {
-    width: 9em;
-}
-
-.hand.size-6 {
-    width: 10em;
-}
-
-.hand.size-7 {
-    width: 11em;
-}
-
-.hand.size-8 {
-    width: 12em;
-}
-
-#scores {
-    background-color: white;
-    padding: 1em 2em;
+#joueurs li {
+    display: block;
+    text-align: center;
+    background: #e5e5e5;
+    border-radius: 4px;
+    padding: 10px;
+    color: #14213d;
+    font-weight: 500;
+    font-size: 1em;
 }
