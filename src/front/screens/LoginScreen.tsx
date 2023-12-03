@@ -38,7 +38,7 @@ export function LoginScreen({ }: LoginScreenProps) {
                 <input type="text" name="name" required /> <i>pseudo</i>
             </div>
             {error && <p className="error">{error}</p>}
-            <input type="submit" value="Choisir" />
+            <input type="submit" value="Choisir" className="button" />
         </form>
     </section>
 }

@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
 
-*:not(.card) {
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -81,7 +81,7 @@ section form .inputBox input:valid~i {
     color: #14213d;
 }
 
-section form input[type="submit"] {
+.button {
     padding: 10px;
     background: #fca311;
     color: #14213d;
@@ -90,8 +90,10 @@ section form input[type="submit"] {
     letter-spacing: 0.05em;
     cursor: pointer;
 }
-
-section input[type="submit"]:active {
+.button:hover {
+    opacity: 0.8;
+}
+.button:active {
     opacity: 0.6;
 }
 

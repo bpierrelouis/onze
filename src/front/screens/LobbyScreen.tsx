@@ -14,7 +14,7 @@ export function LobbyScreen({ }: LobbyScreenProps) {
             <ul id="joueurs">
                 {context.players.map(p => <li key={p.id}>{p.name}</li>)}
             </ul>
-            <input type="submit" value="Commencer la partie" disabled={!canStart} />
+            {canStart && <input type="submit" value="Commencer la partie" className="button" />}
         </form>
     </section>
 }
