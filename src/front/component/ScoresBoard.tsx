@@ -5,7 +5,7 @@ export function ScoresBoard() {
     let players = context.players;
     players.sort((p1, p2) => p1.position! - p2.position!);
 
-    return <table id="scores">
+    return <table id="scores" className="box">
         <thead>
             <tr>
                 <th>Name</th>

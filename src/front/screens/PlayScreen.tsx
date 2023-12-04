@@ -2,23 +2,12 @@ import { useState } from "react"
 import { useGame } from "../hooks/useGame"
 import { CardBoard } from "../component/CardBoard"
 import { PlayerHand } from "../component/PlayerHand"
-import { currentPlayer } from "../../func/game";
-import { TrashCard } from "../component/TrashCard";
-import { prevent } from "../../func/dom";
+import { DrawCard } from "../component/DrawCard";
+import { ScoresBoard } from "../component/ScoresBoard";
 
 export function PlayScreen() {
-    const { send, can, context } = useGame();
+    const { send } = useGame();
     const [selected, setSelected] = useState<number>();
-    const player = currentPlayer(context)
-
-    const trashClick = () => {
-        if (can({ type: "drawTrashCard" })) {
-            send({ type: "drawTrashCard" });
-        } else if (selected !== undefined) {
-            send({ type: "dropCard", index: selected });
-            setSelected(undefined);
-        }
-    }
 
     const putCard = (i: number) => {
         if (selected === undefined) {
@@ -28,12 +17,9 @@ export function PlayScreen() {
         setSelected(undefined);
     }
 
-    return <div className="playingCards">
-        <section>
-            <h2>{player.name} doit {context.doesCurrentPlayerTakeCard ? "jeter" : "piocher"}</h2>
-            <TrashCard card={context.trashCard} onClick={trashClick} />
-            <div className="card back" onClick={prevent(() => send({ type: "drawDeckCard" }))}></div>
-        </section>
+    return <div id="play" className="row">
+        <DrawCard selected={selected} setSelected={setSelected} />
+        <ScoresBoard />
         <CardBoard onClick={putCard} />
         <PlayerHand selected={selected} setSelected={setSelected} />
     </div>

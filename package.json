@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "start": "tsx src/server/server.ts",
-    "start:watch": "nodemon src/server/server.ts",
+    "start": "NODE_ENV=prod tsx src/server/server.ts",
+    "start:watch": "NODE_ENV=dev nodemon src/server/server.ts",
     "gen:key": "tsx src/commands/genKey.ts",
     "build": "tsc && npm run gen:key && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",

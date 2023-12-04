@@ -49,11 +49,11 @@ export function PlayerHand({ selected, setSelected }: { selected?: number, setSe
         });
     }
 
-    return <>
-        {!player.hasPutCards && <>
-            <button onClick={prevent(() => setShowOneDeck(!showOneDeck))}>{showOneDeck ? "Séparer" : "Regrouper"} le paquet</button>
-            {(can({ type: "putCards" }) && !showOneDeck) && <button onClick={prevent(putCards)}>Poser</button>}
-        </>}
-        <div id="player" className="decks">{playerHand}</div>
-    </>
+    return <div id="playerHand" className="box row">
+        {!player.hasPutCards && <div className="column">
+            <button className="button" onClick={prevent(() => setShowOneDeck(!showOneDeck))}>{showOneDeck ? "Séparer" : "Regrouper"} le paquet</button>
+            {(can({ type: "putCards" }) && !showOneDeck) && <button className="button" onClick={prevent(putCards)}>Poser</button>}
+        </div>}
+        <div className="decks playingCards">{playerHand}</div>
+    </div>
 }

@@ -1,5 +1,4 @@
 import { GameStates } from "../types"
-import { ScoresBoard } from "./component/ScoresBoard"
 import { useGame } from "./hooks/useGame"
 import { LobbyScreen } from "./screens/LobbyScreen"
 import { LoginScreen } from "./screens/LoginScreen"
@@ -9,7 +8,6 @@ import { VictoryScreen } from "./screens/VictoryScreen"
 function App() {
 
     const { state, playerId } = useGame()
-    const showBoard = state !== GameStates.LOBBY
 
     if (!playerId) {
         return <LoginScreen />
@@ -19,10 +17,7 @@ function App() {
         {state === GameStates.LOBBY && <LobbyScreen />}
         {[GameStates.ROUND_VICTORY, GameStates.GAME_VICTORY].includes(state) && <VictoryScreen />}
 
-        {showBoard && <>
-            <PlayScreen />
-            <ScoresBoard />
-        </>}
+        {state === GameStates.PLAY && <PlayScreen />}
     </>
 }
 

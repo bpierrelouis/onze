@@ -15,6 +15,7 @@ import ejs from "ejs"
 
 const connections = new ConnectionRepository()
 const games = new GameRepository(connections)
+const env = process.env.NODE_ENV as "dev" | "prod"
 let manifest = {}
 try {
     const manifestData = readFileSync("./public/manifest.json")
@@ -73,7 +74,7 @@ fastify.register(async (f) => {
 })
 
 fastify.get("/", (_req, res) => {
-    res.view("/templates/index.ejs", { manifest })
+    res.view("/templates/index.ejs", { manifest, env })
 })
 
 fastify.post("/api/players", (_req, res) => {

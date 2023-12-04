@@ -31,9 +31,9 @@ export function LoginScreen({ }: LoginScreenProps) {
         onSelect(name.toString())
     }
 
-    return <section className="center">
+    return <section className="form box column">
         <h2>Votre pseudo</h2>
-        <form action="" onSubmit={onSubmit}>
+        <form action="" onSubmit={onSubmit} className="column">
             <div className="inputBox">
                 <input type="text" name="name" required /> <i>pseudo</i>
             </div>
