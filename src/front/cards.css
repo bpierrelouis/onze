@@ -1,0 +1,378 @@
+.playingCards .card.empty {
+    background: transparent;
+    border-color: #fca311;
+    box-shadow: none;
+}
+
+.card {
+    cursor: pointer;
+}
+
+.card.active {
+    transform: translateY(-20%);
+}
+
+.playingCards .card {
+    display: inline-block;
+    width: 3.3em;
+    height: 4.6em;
+    border: 1px solid #14213d;
+    border-radius: .3em;
+    padding: .25em;
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: normal;
+    font-family: Arial, sans-serif;
+    position: relative;
+    background-color: #e5e5e5;
+    box-shadow: .2em .2em .5em #14213d;
+}
+
+.playingCards a.card {
+    text-decoration: none;
+}
+
+.playingCards .card.back {
+    background-image: radial-gradient(#14213d, #fca311);
+}
+
+/* hand
+********************************************************************/
+
+.playingCards ul.hand {
+    list-style-type: none;
+    position: relative;
+    clear: both;
+}
+
+.playingCards ul.hand li {
+    float: left;
+}
+
+/* suit colours
+********************************************************************/
+
+.playingCards .card.diams {
+    color: #f00 !important;
+}
+
+.playingCards .card.hearts {
+    color: #f00 !important;
+}
+
+.playingCards .card.spades {
+    color: #000 !important;
+}
+
+.playingCards .card.clubs {
+    color: #000 !important;
+}
+
+.playingCards .card.joker {
+    color: #000 !important;
+}
+
+/* inner bits
+********************************************************************/
+
+/* top left main info (rank and suit) */
+
+.playingCards .card .rank,
+.playingCards .card .suit {
+    display: block;
+    line-height: 1;
+    text-align: left;
+}
+
+.playingCards .card .suit {
+    line-height: .7;
+}
+
+/* different rank letters */
+.playingCards .card .rank:after,
+.playingCards .card.joker .rank:before {
+    position: absolute;
+    top: .25em;
+    left: .25em;
+    background: #e5e5e5;
+}
+
+.playingCards .card.rank-j .rank:after {
+    content: "V";
+}
+
+.playingCards .card.rank-q .rank:after {
+    content: "D";
+}
+
+.playingCards .card.rank-k .rank:after {
+    content: "R";
+}
+
+/* joker (top left symbol) */
+.playingCards .card.joker .rank {
+    position: absolute;
+}
+
+.playingCards .card.joker .rank:before {
+    content: "\2605";
+    top: 0;
+    left: 0;
+}
+
+.playingCards .card.joker .suit {
+    text-indent: -9999px;
+}
+
+/* inner multiple suits */
+.playingCards .card .suit:after {
+    display: block;
+    margin-top: -.8em;
+    text-align: center;
+    white-space: pre;
+    line-height: .9;
+    font-size: 1.3em;
+    word-spacing: -.05em;
+}
+
+/* make the hearts and clubs symbols fit, because they are a bit bigger than the others */
+.playingCards .card.hearts .suit:after {
+    word-spacing: -.15em;
+}
+
+.playingCards .card.hearts.rank-10 .suit:after {
+    word-spacing: -.05em;
+    letter-spacing: -.1em;
+}
+
+.playingCards .card.clubs.rank-10 .suit:after {
+    word-spacing: -.15em;
+}
+
+/* 8, 9, 10 are the most crowded */
+.playingCards .card.rank-8 .suit:after,
+.playingCards .card.rank-9 .suit:after {
+    letter-spacing: -.075em;
+}
+
+.playingCards .card.rank-10 .suit:after {
+    letter-spacing: -.1em;
+}
+
+.playingCards .card.clubs .suit:after {
+    letter-spacing: -.125em;
+}
+
+/*____________ symbols in the middle (suits, full) ____________*/
+
+/* diams */
+.playingCards .card.rank-2.diams .suit:after {
+    content: "\2666 \A\A\2666";
+}
+
+.playingCards .card.rank-3.diams .suit:after {
+    content: "\2666 \A\2666 \A\2666";
+}
+
+.playingCards .card.rank-4.diams .suit:after {
+    content: "\2666\00A0\00A0\00A0\2666 \A\A\2666\00A0\00A0\00A0\2666";
+}
+
+.playingCards .card.rank-5.diams .suit:after {
+    content: "\2666\00A0\00A0\00A0\2666 \A\2666 \A\2666\00A0\00A0\00A0\2666";
+}
+
+.playingCards .card.rank-6.diams .suit:after {
+    content: "\2666\00A0\00A0\00A0\2666 \A\2666\00A0\00A0\00A0\2666 \A\2666\00A0\00A0\00A0\2666";
+}
+
+.playingCards .card.rank-7.diams .suit:after {
+    content: "\2666\00A0\00A0\2666 \A\2666\00A0\2666\00A0\2666 \A\2666\00A0\00A0\2666";
+}
+
+.playingCards .card.rank-8.diams .suit:after {
+    content: "\2666\00A0\2666\00A0\2666 \A\2666\00A0\00A0\2666 \A\2666\00A0\2666\00A0\2666";
+}
+
+.playingCards .card.rank-9.diams .suit:after {
+    content: "\2666\00A0\2666\00A0\2666 \A\2666\00A0\2666\00A0\2666 \A\2666\00A0\2666\00A0\2666";
+}
+
+.playingCards .card.rank-10.diams .suit:after {
+    content: "\2666\00A0\2666\00A0\2666 \A\2666\00A0\2666\00A0\2666\00A0\2666 \A\2666\00A0\2666\00A0\2666";
+}
+
+/* hearts */
+.playingCards .card.rank-2.hearts .suit:after {
+    content: "\2665 \A\A\2665";
+}
+
+.playingCards .card.rank-3.hearts .suit:after {
+    content: "\2665 \A\2665 \A\2665";
+}
+
+.playingCards .card.rank-4.hearts .suit:after {
+    content: "\2665\00A0\00A0\00A0\2665 \A\A\2665\00A0\00A0\00A0\2665";
+}
+
+.playingCards .card.rank-5.hearts .suit:after {
+    content: "\2665\00A0\00A0\00A0\2665 \A\2665 \A\2665\00A0\00A0\00A0\2665";
+}
+
+.playingCards .card.rank-6.hearts .suit:after {
+    content: "\2665\00A0\00A0\00A0\2665 \A\2665\00A0\00A0\00A0\2665 \A\2665\00A0\00A0\00A0\2665";
+}
+
+.playingCards .card.rank-7.hearts .suit:after {
+    content: "\2665\00A0\00A0\2665 \A\2665\00A0\2665\00A0\2665 \A\2665\00A0\00A0\2665";
+}
+
+.playingCards .card.rank-8.hearts .suit:after {
+    content: "\2665\00A0\2665\00A0\2665 \A\2665\00A0\00A0\2665 \A\2665\00A0\2665\00A0\2665";
+}
+
+.playingCards .card.rank-9.hearts .suit:after {
+    content: "\2665\00A0\2665\00A0\2665 \A\2665\00A0\2665\00A0\2665 \A\2665\00A0\2665\00A0\2665";
+}
+
+.playingCards .card.rank-10.hearts .suit:after {
+    content: "\2665\00A0\2665\00A0\2665 \A\2665\00A0\2665\00A0\2665\00A0\2665 \A\2665\00A0\2665\00A0\2665";
+}
+
+/* spades */
+.playingCards .card.rank-2.spades .suit:after {
+    content: "\2660 \A\A\2660";
+}
+
+.playingCards .card.rank-3.spades .suit:after {
+    content: "\2660 \A\2660 \A\2660";
+}
+
+.playingCards .card.rank-4.spades .suit:after {
+    content: "\2660\00A0\00A0\00A0\2660 \A\A\2660\00A0\00A0\00A0\2660";
+}
+
+.playingCards .card.rank-5.spades .suit:after {
+    content: "\2660\00A0\00A0\00A0\2660 \A\2660 \A\2660\00A0\00A0\00A0\2660";
+}
+
+.playingCards .card.rank-6.spades .suit:after {
+    content: "\2660\00A0\00A0\00A0\2660 \A\2660\00A0\00A0\00A0\2660 \A\2660\00A0\00A0\00A0\2660";
+}
+
+.playingCards .card.rank-7.spades .suit:after {
+    content: "\2660\00A0\00A0\2660 \A\2660\00A0\2660\00A0\2660 \A\2660\00A0\00A0\2660";
+}
+
+.playingCards .card.rank-8.spades .suit:after {
+    content: "\2660\00A0\2660\00A0\2660 \A\2660\00A0\00A0\2660 \A\2660\00A0\2660\00A0\2660";
+}
+
+.playingCards .card.rank-9.spades .suit:after {
+    content: "\2660\00A0\2660\00A0\2660 \A\2660\00A0\2660\00A0\2660 \A\2660\00A0\2660\00A0\2660";
+}
+
+.playingCards .card.rank-10.spades .suit:after {
+    content: "\2660\00A0\2660\00A0\2660 \A\2660\00A0\2660\00A0\2660\00A0\2660 \A\2660\00A0\2660\00A0\2660";
+}
+
+/* clubs */
+.playingCards .card.rank-2.clubs .suit:after {
+    content: "\2663 \A\A\2663";
+}
+
+.playingCards .card.rank-3.clubs .suit:after {
+    content: "\2663 \A\2663 \A\2663";
+}
+
+.playingCards .card.rank-4.clubs .suit:after {
+    content: "\2663\00A0\00A0\00A0\2663 \A\A\2663\00A0\00A0\00A0\2663";
+}
+
+.playingCards .card.rank-5.clubs .suit:after {
+    content: "\2663\00A0\00A0\00A0\2663 \A\2663 \A\2663\00A0\00A0\00A0\2663";
+}
+
+.playingCards .card.rank-6.clubs .suit:after {
+    content: "\2663\00A0\00A0\00A0\2663 \A\2663\00A0\00A0\00A0\2663 \A\2663\00A0\00A0\00A0\2663";
+}
+
+.playingCards .card.rank-7.clubs .suit:after {
+    content: "\2663\00A0\00A0\2663 \A\2663\00A0\2663\00A0\2663 \A\2663\00A0\00A0\2663";
+}
+
+.playingCards .card.rank-8.clubs .suit:after {
+    content: "\2663\00A0\2663\00A0\2663 \A\2663\00A0\00A0\2663 \A\2663\00A0\2663\00A0\2663";
+}
+
+.playingCards .card.rank-9.clubs .suit:after {
+    content: "\2663\00A0\2663\00A0\2663 \A\2663\00A0\2663\00A0\2663 \A\2663\00A0\2663\00A0\2663";
+}
+
+.playingCards .card.rank-10.clubs .suit:after {
+    content: "\2663\00A0\2663\00A0\2663 \A\2663\00A0\2663\00A0\2663\00A0\2663 \A\2663\00A0\2663\00A0\2663";
+}
+
+/*____________ symbols in the middle (faces as dingbat symbols) ____________*/
+
+.playingCards .card.rank-j .suit:after,
+.playingCards .card.rank-q .suit:after,
+.playingCards .card.rank-k .suit:after,
+.playingCards .card.rank-a .suit:after,
+.playingCards .card.joker .rank:after {
+    font-family: Georgia, serif;
+    position: absolute;
+    font-size: 3em;
+    right: .1em;
+    bottom: .1em;
+    word-spacing: normal;
+    letter-spacing: normal;
+    line-height: 1;
+}
+
+.playingCards .card.rank-j .suit:after {
+    content: "\265F";
+    /* right: .15em; */
+}
+
+.playingCards .card.rank-q .suit:after {
+    content: "\265B";
+}
+
+.playingCards .card.rank-k .suit:after {
+    content: "\265A";
+}
+
+.playingCards .card.joker .rank:after {
+    position: absolute;
+    content: "\2766";
+    /* top: .4em; */
+    /* left: .1em; */
+}
+
+/* big suits in middle */
+.playingCards .card.rank-a .suit:after {
+    font-family: Arial, sans-serif;
+    /* line-height: .9; */
+    /* bottom: .35em; */
+}
+
+.playingCards .card.rank-a.diams .suit:after {
+    content: "\2666";
+    /* right: .4em; */
+}
+
+.playingCards .card.rank-a.hearts .suit:after {
+    content: "\2665";
+    /* right: .35em; */
+}
+
+.playingCards .card.rank-a.spades .suit:after {
+    content: "\2660";
+    /* right: .35em; */
+}
+
+.playingCards .card.rank-a.clubs .suit:after {
+    content: "\2663";
+    /* right: .3em; */
+}

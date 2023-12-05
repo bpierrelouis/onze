@@ -9,6 +9,7 @@
 
 body {
     background: #e5e5e5;
+    padding: 1%;
 }
 
 .box {
@@ -91,9 +92,11 @@ body {
 .form .button {
     font-size: 1.35em;
 }
+
 .button:hover {
     opacity: 0.8;
 }
+
 .button:active {
     opacity: 0.6;
 }
@@ -120,18 +123,25 @@ body {
 }
 
 #play {
-    justify-content: space-evenly;
-    align-items: center;
-    gap: 2em;
+    justify-content: space-between;
+    align-items: start;
+    gap: 1em;
     flex-wrap: wrap;
 }
 
 #draw {
+    width: 50%;
     align-items: center;
     gap: 1em;
 }
 
-#draw, #scores, #playerHand {
+#draw .row {
+    gap: 1.5em;
+}
+
+#draw,
+#scores,
+#playerHand {
     padding: .75em;
 }
 
@@ -139,37 +149,29 @@ body {
     color: #fff;
     font-size: 1.2em;
 }
+
 #scores th {
     color: #fca311;
     padding: 0 .5em;
 }
+
 #scores tr :not(:first-child) {
     text-align: center;
 }
 
-#playerHand, #board {
+#playerHand,
+#board {
     width: 100%;
-}
-
-#root .card.empty {
-    background: transparent;
-    box-shadow: none;
-}
-
-.card {
-    cursor: pointer;
-}
-
-.card.active {
-    transform: translateY(-20%);
 }
 
 #playerHand {
     gap: 1em;
 }
+
 #playerHand .button {
     font-size: 1.05em;
 }
+
 #playerHand .card:hover {
     transform: translateY(-20%);
 }
