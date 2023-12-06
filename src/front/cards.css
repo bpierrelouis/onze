@@ -68,28 +68,6 @@
     line-height: .7;
 }
 
-/* checkbox */
-.playingCards .card input {
-    margin-top: -.05em;
-    font: inherit;
-}
-
-.playingCards .card.rank-j input,
-.playingCards .card.rank-q input,
-.playingCards .card.rank-k input,
-.playingCards .card.rank-a input {
-    margin-top: 2.4em;
-}
-
-/* different rank letters for different languages */
-.playingCards .card .rank:after,
-.playingCards .card.joker .rank:before {
-    position: absolute;
-    top: .25em;
-    left: .25em;
-    background: #fff;
-}
-
 /* joker (top left symbol) */
 .playingCards .card.joker .rank {
     position: absolute;
@@ -105,51 +83,8 @@
     text-indent: -9999px;
 }
 
-/* inner multiple suits */
-.playingCards .card .suit:after {
-    display: block;
-    margin-top: -.8em;
-    text-align: center;
-    white-space: pre;
-    line-height: .9;
-    font-size: 1.3em;
-    word-spacing: -.05em;
-}
-
-/* make the hearts and clubs symbols fit, because they are a bit bigger than the others */
-.playingCards .card.hearts .suit:after {
-    word-spacing: -.15em;
-}
-
-.playingCards .card.hearts.rank-10 .suit:after {
-    word-spacing: -.05em;
-    letter-spacing: -.1em;
-}
-
-.playingCards .card.clubs.rank-10 .suit:after {
-    word-spacing: -.15em;
-}
-
-/* 8, 9, 10 are the most crowded */
-.playingCards .card.rank-8 .suit:after,
-.playingCards .card.rank-9 .suit:after {
-    letter-spacing: -.075em;
-}
-
-.playingCards .card.rank-10 .suit:after {
-    letter-spacing: -.1em;
-}
-
-.playingCards .card.clubs .suit:after {
-    letter-spacing: -.125em;
-}
-
 /*____________ symbols in the middle (faces as dingbat symbols) ____________*/
 
-.playingCards .card.rank-j .suit:after,
-.playingCards .card.rank-q .suit:after,
-.playingCards .card.rank-k .suit:after,
-.playingCards .card.rank-a .suit:after,
 .playingCards .card.joker .rank:after {
     font-family: Georgia, serif;
     position: absolute;
@@ -235,4 +170,24 @@
 
 .playingCards ul.hand li:nth-child(14) {
     transform: translateX(calc(13 * -60%));
+}
+
+.playingCards ul.hand li:nth-child(15) {
+    transform: translateX(calc(14 * -60%));
+}
+
+.playingCards ul.hand li:nth-child(16) {
+    transform: translateX(calc(15 * -60%));
+}
+
+.playingCards ul.hand li:nth-child(17) {
+    transform: translateX(calc(16 * -60%));
+}
+
+.playingCards ul.hand li:nth-child(18) {
+    transform: translateX(calc(17 * -60%));
+}
+
+.playingCards ul.hand li:nth-child(19) {
+    transform: translateX(calc(18 * -60%));
 }
