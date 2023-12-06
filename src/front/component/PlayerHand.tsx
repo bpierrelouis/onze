@@ -41,7 +41,7 @@ export function PlayerHand({ selected, setSelected }: { selected?: number, setSe
 
         let i = 0;
         groups.forEach((group) => {
-            playerHand.push(<ul key={i} className={"hand size-" + group.length} >{group.map((c) => {
+            playerHand.push(<ul key={i} className="hand">{group.map((c) => {
                 let element = cardElement(i, c);
                 i++;
                 return element;
@@ -51,7 +51,7 @@ export function PlayerHand({ selected, setSelected }: { selected?: number, setSe
 
     return <div id="playerHand" className="box row">
         {!player.hasPutCards && <div className="column">
-            <button className="button" onClick={prevent(() => setShowOneDeck(!showOneDeck))}>{showOneDeck ? "Séparer" : "Regrouper"} le paquet</button>
+            <button className="button" onClick={prevent(() => setShowOneDeck(!showOneDeck))}>{showOneDeck ? "Dégrouper" : "Grouper"}</button>
             {(can({ type: "putCards" }) && !showOneDeck) && <button className="button" onClick={prevent(putCards)}>Poser</button>}
         </div>}
         <div className="decks playingCards">{playerHand}</div>

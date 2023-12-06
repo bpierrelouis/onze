@@ -9,7 +9,6 @@
 
 body {
     background: #e5e5e5;
-    padding: 1%;
 }
 
 .box {
@@ -123,6 +122,14 @@ body {
 }
 
 #play {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100vh;
+
+    padding: 1%;
+
     justify-content: space-between;
     align-items: start;
     gap: 1em;
@@ -165,6 +172,7 @@ body {
 }
 
 #playerHand {
+    align-self: flex-end;
     gap: 1em;
 }
 

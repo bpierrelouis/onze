@@ -19,7 +19,7 @@
     display: block;
     width: 3.3em;
     height: 4.6em;
-    border: 1px solid #666;
+    border: 1px solid #14213d;
     border-radius: .3em;
     -moz-border-radius: .3em;
     -webkit-border-radius: .3em;
@@ -32,9 +32,9 @@
     font-family: Arial, sans-serif;
     position: relative;
     background-color: #fff;
-    -moz-box-shadow: .2em .2em .5em #333;
-    -webkit-box-shadow: .2em .2em .5em #333;
-    box-shadow: .2em .2em .5em #333;
+    -moz-box-shadow: .2em .2em .5em #14213d;
+    -webkit-box-shadow: .2em .2em .5em #14213d;
+    box-shadow: .2em .2em .5em #14213d;
 }
 
 .playingCards .card.back {
