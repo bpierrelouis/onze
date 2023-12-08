@@ -54,6 +54,6 @@ export function PlayerHand({ selected, setSelected }: { selected?: number, setSe
             <button className="button" onClick={prevent(() => setShowOneDeck(!showOneDeck))}>{showOneDeck ? "Dégrouper" : "Grouper"}</button>
             {(can({ type: "putCards" }) && !showOneDeck) && <button className="button" onClick={prevent(putCards)}>Poser</button>}
         </div>}
-        <div className="decks playingCards">{playerHand}</div>
+        <div className="playingCards row">{playerHand}</div>
     </div>
 }

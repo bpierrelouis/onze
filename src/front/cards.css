@@ -109,7 +109,7 @@
 
 .playingCards ul.hand {
     list-style-type: none;
-    float: left;
+    /* float: left; */
 }
 
 .playingCards ul.hand li {
@@ -118,7 +118,11 @@
     float: left;
 }
 
-.playingCards ul.hand li:nth-child(2) {
+.playingCards ul.hand li:not(:last-of-type) {
+    margin-right: -2em;
+}
+
+/* .playingCards ul.hand li:nth-child(2) {
     transform: translateX(calc(1 * -50%));
 }
 
@@ -188,4 +192,4 @@
 
 .playingCards ul.hand li:nth-child(19) {
     transform: translateX(calc(18 * -50%));
-}
+} */
