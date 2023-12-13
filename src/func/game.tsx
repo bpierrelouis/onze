@@ -82,7 +82,10 @@ function isSuite(cards: Card[]): boolean {
     // si les cartes sont de même couleur + joker
     const suits = cards.map((c) => c.suit);
     const numberOfSuits = (new Set(suits)).size;
-    if (!((numberOfSuits === 1) || (numberOfSuits === 2 && suits.includes(null)))) { return false; }
+    if (!(numberOfSuits === 1 || (numberOfSuits === 2 && suits.includes(null)))) { return false }
+
+    // si c'est les 4 premières cartes et qu'il y a 2 jokers
+    if (cards.length === 4 && cards.filter((c) => !c.suit).length >= 2) { return false }
 
     const values = cards.map((c) => c.value);
     const cardValues = Object.values(CardValue);
