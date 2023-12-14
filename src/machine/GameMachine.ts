@@ -24,7 +24,6 @@ export const GameModel = createModel({
         moveCard: (playerId: Player["id"], from: number, to: number) => ({ playerId, from, to }),
         putCards: (playerId: Player["id"]) => ({ playerId }),
         putCard: (playerId: Player["id"], from: number, to: number) => ({ playerId, from, to }),
-        continue: () => ({}),
         restart: () => ({})
     }
 })
@@ -99,8 +98,8 @@ export const GameMachine = GameModel.createMachine({
             }
         },
         [GameStates.ROUND_VICTORY]: {
-            on: {
-                continue: {
+            after: {
+                10000: {
                     target: GameStates.PLAY,
                     actions: [GameModel.assign(startRound)]
                 }

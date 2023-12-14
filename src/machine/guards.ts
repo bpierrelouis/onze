@@ -1,5 +1,5 @@
 import { check, currentPlayer, groupCard, roundType } from "../func/game";
-import { DeckType, GameContext, GameGuard } from "../types";
+import { DeckType, GameGuard } from "../types";
 
 export const canJoin: GameGuard<"join"> = (context, event) => {
     return context.players.length < 2 && context.players.find(p => p.id === event.playerId) === undefined
@@ -95,10 +95,6 @@ export const isWinningRoundDrop: GameGuard<"dropCard"> = (context, event) => {
     return score === 0;
 }
 
-export const isLastRound = (context: GameContext) => {
-    return context.round === 6;
-}
-
 export const isWinningGameDrop: GameGuard<"dropCard"> = (context, event) => {
-    return isLastRound(context) && isWinningRoundDrop(context, event);
+    return (context.round === 6) && isWinningRoundDrop(context, event);
 }
