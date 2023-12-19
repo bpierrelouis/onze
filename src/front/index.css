@@ -35,6 +35,7 @@ body {
     font-size: 2em;
     color: #fca311;
     text-transform: uppercase;
+    text-align: center;
 }
 
 .form form {
@@ -122,12 +123,6 @@ body {
 }
 
 #play {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 100vh;
-
     padding: 1%;
 
     justify-content: space-between;
@@ -176,9 +171,11 @@ body {
     gap: 1em;
 }
 
-#playerHand .playingCards {
+#playerHand .playingCards,
+#board {
     gap: 1em;
-} 
+    flex-wrap: wrap;
+}
 
 #playerHand .button {
     font-size: 1.05em;
@@ -191,6 +188,7 @@ body {
 .column {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
 }
 
 .row {

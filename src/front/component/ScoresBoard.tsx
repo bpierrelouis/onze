@@ -8,9 +8,9 @@ export function ScoresBoard() {
     return <table id="scores" className="box">
         <thead>
             <tr>
-                <th>Name</th>
+                <th>Joueur</th>
                 <th>Score</th>
-                <th>Cards</th>
+                <th>Cartes</th>
             </tr>
         </thead>
         <tbody>

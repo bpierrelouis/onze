@@ -109,7 +109,6 @@
 
 .playingCards ul.hand {
     list-style-type: none;
-    /* float: left; */
 }
 
 .playingCards ul.hand li {
@@ -121,75 +120,3 @@
 .playingCards ul.hand li:not(:last-of-type) {
     margin-right: -2em;
 }
-
-/* .playingCards ul.hand li:nth-child(2) {
-    transform: translateX(calc(1 * -50%));
-}
-
-.playingCards ul.hand li:nth-child(3) {
-    transform: translateX(calc(2 * -50%));
-}
-
-.playingCards ul.hand li:nth-child(4) {
-    transform: translateX(calc(3 * -50%));
-}
-
-.playingCards ul.hand li:nth-child(5) {
-    transform: translateX(calc(4 * -50%));
-}
-
-.playingCards ul.hand li:nth-child(6) {
-    transform: translateX(calc(5 * -50%));
-}
-
-.playingCards ul.hand li:nth-child(7) {
-    transform: translateX(calc(6 * -50%));
-}
-
-.playingCards ul.hand li:nth-child(8) {
-    transform: translateX(calc(7 * -50%));
-}
-
-.playingCards ul.hand li:nth-child(9) {
-    transform: translateX(calc(8 * -50%));
-}
-
-.playingCards ul.hand li:nth-child(10) {
-    transform: translateX(calc(9 * -50%));
-}
-
-.playingCards ul.hand li:nth-child(11) {
-    transform: translateX(calc(10 * -50%));
-}
-
-.playingCards ul.hand li:nth-child(12) {
-    transform: translateX(calc(11 * -50%));
-}
-
-.playingCards ul.hand li:nth-child(13) {
-    transform: translateX(calc(12 * -50%));
-}
-
-.playingCards ul.hand li:nth-child(14) {
-    transform: translateX(calc(13 * -50%));
-}
-
-.playingCards ul.hand li:nth-child(15) {
-    transform: translateX(calc(14 * -50%));
-}
-
-.playingCards ul.hand li:nth-child(16) {
-    transform: translateX(calc(15 * -50%));
-}
-
-.playingCards ul.hand li:nth-child(17) {
-    transform: translateX(calc(16 * -50%));
-}
-
-.playingCards ul.hand li:nth-child(18) {
-    transform: translateX(calc(17 * -50%));
-}
-
-.playingCards ul.hand li:nth-child(19) {
-    transform: translateX(calc(18 * -50%));
-} */
