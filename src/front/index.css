@@ -147,17 +147,17 @@ body {
     flex-wrap: wrap;
 }
 
-#draw {
+#play section.box {
     width: 50%;
     align-items: center;
     gap: 1em;
 }
 
-#draw .row {
+#play section.box .row {
     gap: 1.5em;
 }
 
-#draw,
+#play section.box,
 #scores,
 #playerHand {
     padding: .75em;

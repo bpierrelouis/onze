@@ -16,7 +16,7 @@ export function DrawCard({ selected, setSelected }: { selected?: number, setSele
         }
     }
 
-    return <section id="draw" className="playingCards box column">
+    return <section className="playingCards box column">
         <h2>{player.name} doit {context.doesCurrentPlayerTakeCard ? "jeter" : "piocher"}</h2>
         <div className="row">
             <TrashCard card={context.trashCard} onClick={trashClick} />
