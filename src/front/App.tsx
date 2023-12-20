@@ -1,4 +1,5 @@
 import { GameStates } from "../types"
+import { Copyright } from "./component/Copyright"
 import { useGame } from "./hooks/useGame"
 import { LobbyScreen } from "./screens/LobbyScreen"
 import { LoginScreen } from "./screens/LoginScreen"
@@ -10,7 +11,7 @@ function App() {
     const { state, playerId } = useGame()
 
     if (!playerId) {
-        return <LoginScreen />
+        return <><LoginScreen /><Copyright /></>
     }
 
     return <>
@@ -18,7 +19,7 @@ function App() {
         {[GameStates.ROUND_VICTORY, GameStates.GAME_VICTORY].includes(state) && <VictoryScreen />}
 
         {state === GameStates.PLAY && <PlayScreen />}
-        <p id="copyright">&copy;2023-2024 BAELDE Pierre-Louis - <a href="https://github.com/bpierrelouis/onze" target="_blank">voir les sources et/ou les règles</a></p>
+        <Copyright />
     </>
 }
 

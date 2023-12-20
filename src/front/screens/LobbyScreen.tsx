@@ -1,9 +1,7 @@
 import { prevent } from "../../func/dom"
 import { useGame } from "../hooks/useGame"
 
-type LobbyScreenProps = {}
-
-export function LobbyScreen({ }: LobbyScreenProps) {
+export function LobbyScreen() {
     const { send, context, can } = useGame()
     const startGame = () => send({ type: "start" })
     const canStart = can({ type: "start" })

@@ -5,9 +5,7 @@ import { updateQueryParams, urlSearchParams } from "../func/url"
 import { useGame } from "../hooks/useGame"
 import { FormEvent, useState } from "react"
 
-type LoginScreenProps = {}
-
-export function LoginScreen({ }: LoginScreenProps) {
+export function LoginScreen() {
     const { connect } = useGame()
     const [error, setError] = useState("")
 
