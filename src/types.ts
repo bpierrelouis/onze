@@ -90,6 +90,11 @@ export type Player = {
     position?: number
 }
 
+export type GameItem = {
+    id: string,
+    numberOfPlayer: number
+}
+
 export enum DeckType {
     BRELAN = "Brelan",
     SUITE = "Suite"

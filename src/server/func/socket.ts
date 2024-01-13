@@ -2,6 +2,8 @@ import { InterpreterFrom } from "xstate";
 import { GameMachine } from "../../machine/GameMachine";
 import { ConnectionRepository } from "../repositories/ConnectionRepository";
 import { SocketStream } from "@fastify/websocket"
+import { GameRepository } from "../repositories/GameRepository";
+import { GameItem } from "../../types";
 
 export function publishMachineToPlayers(
     machine: InterpreterFrom<typeof GameMachine>["state"],
@@ -25,5 +27,26 @@ export function publishMachine(
         state: machine.value,
         context: machine.context
     }))
+}
 
+export function publishGamesListToPlayers(
+    gameRepository: GameRepository,
+    connectionRepository: ConnectionRepository
+) {
+    const games: string[] = gameRepository.findAllUnstartedGames();
+    const connections: SocketStream[][] = games.map((gameId) => connectionRepository.findAll(gameId));
+    const gameItems: GameItem[] = games.map((id, index) => {
+        return { id: id, numberOfPlayer: connections[index].length }
+    })
+    connections.flatMap((array) => array).forEach((connection) => publishGamesList(gameItems, connection));
+}
+
+function publishGamesList(
+    gameItems: GameItem[],
+    connection: SocketStream
+) {
+    connection.socket.send(JSON.stringify({
+        type: "gamesList",
+        gameItems: gameItems
+    }))
 }

@@ -10,16 +10,13 @@ export class GameRepository {
     constructor(
         private connections: ConnectionRepository,
         private games = new Map<string, Machine>
-    ) {
-
-    }
+    ) { }
 
     create(id: string): Machine {
         const game = interpret(GameMachine)
             .onTransition((state) => {
-                if (state.changed) {
-                    publishMachineToPlayers(state, this.connections, id)
-                }
+                if (!state.changed) { return }
+                publishMachineToPlayers(state, this.connections, id)
             })
             .start()
         this.games.set(id, game)
@@ -35,5 +32,13 @@ export class GameRepository {
         if (game && game.state.context.players.filter(p => this.connections.has(p.id, id)).length === 0) {
             this.games.delete(id)
         }
+    }
+
+    findAllUnstartedGames(): Array<string> {
+        let games = Array.from(this.games).map(([id, game]) => {
+            return { id: id, round: game.state.context.round }
+        });
+        games = games.filter((couple) => couple.round === 0);
+        return games.map((couple) => couple.id);
     }
 }

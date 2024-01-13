@@ -8,7 +8,7 @@ import { ServerErrors } from "../types"
 import { ConnectionRepository } from "./repositories/ConnectionRepository"
 import { GameRepository } from "./repositories/GameRepository"
 import { GameModel } from "../machine/GameMachine"
-import { publishMachine } from "./func/socket"
+import { publishGamesListToPlayers, publishMachine } from "./func/socket"
 import { readFileSync } from "fs"
 import FastifyView from "@fastify/view"
 import ejs from "ejs"
@@ -58,17 +58,20 @@ fastify.register(async (f) => {
         connections.persist(playerId, gameId, connection)
         game.send(GameModel.events.join(playerId, playerName))
         publishMachine(game.state, connection)
+        publishGamesListToPlayers(games, connections)
 
         connection.socket.on("message", (rawMessage) => {
             const message = JSON.parse(rawMessage.toLocaleString())
             if (message.type !== "gameUpdate") { return }
             game.send(message.event)
+            publishGamesListToPlayers(games, connections)
         })
 
         connection.socket.on("close", () => {
             connections.remove(playerId, gameId)
             game.send(GameModel.events.leave(playerId))
             games.clean(gameId)
+            publishGamesListToPlayers(games, connections)
         })
     })
 })

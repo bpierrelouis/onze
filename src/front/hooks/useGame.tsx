@@ -1,5 +1,5 @@
 import { PropsWithChildren, createContext, useCallback, useContext, useEffect, useState } from "react"
-import { GameContext, GameEvent, GameEvents, GameStates, Player, PlayerSession, QueryParams, ServerErrors } from "../../types"
+import { GameContext, GameEvent, GameEvents, GameItem, GameStates, Player, PlayerSession, QueryParams, ServerErrors } from "../../types"
 import { GameMachine, makeGame } from "../../machine/GameMachine"
 import ReconnectingWebSocket from "reconnecting-websocket"
 import { urlSearchParams } from "../func/url"
@@ -12,7 +12,8 @@ type GameContextType = {
     connect: (session: PlayerSession, gameId: string) => void,
     send: <T extends GameEvents["type"]>(event: { type: T, playerId?: string } & Omit<GameEvent<T>, "playerId">) => void,
     can: <T extends GameEvents["type"]>(event: { type: T, playerId?: string } & Omit<GameEvent<T>, "playerId">) => boolean,
-    playerId: Player["id"]
+    playerId: Player["id"],
+    gameItems: GameItem[]
 }
 
 const Context = createContext<GameContextType>({} as any)
@@ -26,6 +27,7 @@ export function GameContextProvider({ children }: PropsWithChildren) {
 
     const [playerId, setPlayerId] = useState("")
     const [socket, setSocket] = useState<ReconnectingWebSocket | null>(null)
+    const [gameItems, setGameItems] = useState<GameItem[]>([])
 
     const sendWithPlayer = useCallback<GameContextType["send"]>((event) => {
         const eventWithPlayer = { playerId, ...event }
@@ -63,6 +65,9 @@ export function GameContextProvider({ children }: PropsWithChildren) {
                 setPlayerId("")
             } else if (message.type === "gameUpdate") {
                 setMachine(makeGame(message.state, message.context))
+            } else if (message.type === "gamesList") {
+                console.log(message)
+                setGameItems(message.gameItems)
             }
         }
         socket.addEventListener("message", onMessage)
@@ -77,7 +82,8 @@ export function GameContextProvider({ children }: PropsWithChildren) {
         context: machine?.state.context,
         send: sendWithPlayer,
         can,
-        connect
+        connect,
+        gameItems
     }}>
         {children}
     </Context.Provider>

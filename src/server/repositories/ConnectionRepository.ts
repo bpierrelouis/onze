@@ -4,9 +4,7 @@ import { SocketStream } from "@fastify/websocket"
 export class ConnectionRepository {
     constructor(
         private connections = new Map<Player["id"], Map<string, SocketStream>>
-    ) {
-
-    }
+    ) { }
 
     persist(playerId: Player["id"], gameId: string, connection: SocketStream) {
         if (!this.connections.has(playerId)) {
@@ -28,5 +26,11 @@ export class ConnectionRepository {
 
     has(playerId: Player["id"], gameId: string): boolean {
         return !!this.connections.get(playerId)?.has(gameId)
+    }
+
+    findAll(gameId: string): SocketStream[] {
+        let socketByGame: Map<string, SocketStream>[] = Array.from(this.connections).map(([_playerId, data]) => data);
+        let sockets: SocketStream[] = socketByGame.map((data) => data.get(gameId)).filter((e) => e !== undefined).map((e) => e!);
+        return sockets;
     }
 }
