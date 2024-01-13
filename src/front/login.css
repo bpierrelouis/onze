@@ -1,0 +1,50 @@
+#login {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#login form {
+    width: 100%;
+    gap: 25px;
+}
+
+#login .inputBox {
+    position: relative;
+    width: 100%;
+}
+
+#login input {
+    position: relative;
+    width: 100%;
+    background: #e5e5e5;
+    border: none;
+    outline: none;
+    padding: 25px 10px 7.5px;
+    border-radius: 4px;
+    color: #14213d;
+    font-weight: 500;
+    font-size: 1em;
+}
+
+.inputBox i {
+    position: absolute;
+    left: 0;
+    padding: 15px 10px;
+    font-style: normal;
+    color: #14213d;
+    transition: 0.5s;
+    pointer-events: none;
+}
+
+.inputBox input:focus~i,
+.inputBox input:valid~i {
+    transform: translateY(-7.5px);
+    font-size: 0.8em;
+    color: #14213d;
+}
+
+#login .error {
+    color: #fca311;
+    text-align: center;
+}

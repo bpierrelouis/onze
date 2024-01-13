@@ -1,9 +1,10 @@
 import { v4 } from "uuid"
-import { PlayerSession, QueryParams } from "../../types"
+import { PlayerSession } from "../../types"
 import { saveSession } from "../func/session"
-import { updateQueryParams, urlSearchParams } from "../func/url"
+import { getGameId, setGameId } from "../func/url"
 import { useGame } from "../hooks/useGame"
 import { FormEvent, useState } from "react"
+import "./../login.css"
 
 export function LoginScreen() {
     const { connect } = useGame()
@@ -15,9 +16,9 @@ export function LoginScreen() {
             ...response,
             name
         })
-        const gameId = urlSearchParams().get(QueryParams.GAMEID) ?? v4()
+        const gameId = getGameId() ?? v4();
         connect(player, gameId)
-        updateQueryParams({ [QueryParams.GAMEID]: gameId })
+        setGameId(gameId);
     }
     const onSubmit = (e: FormEvent) => {
         e.preventDefault()
@@ -29,7 +30,7 @@ export function LoginScreen() {
         onSelect(name.toString())
     }
 
-    return <section className="form box column">
+    return <section id="login" className="form box column">
         <h2>Votre pseudo</h2>
         <form action="" onSubmit={onSubmit} className="column">
             <div className="inputBox">

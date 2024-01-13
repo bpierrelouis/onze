@@ -1,8 +1,8 @@
 import { PropsWithChildren, createContext, useCallback, useContext, useEffect, useState } from "react"
-import { GameContext, GameEvent, GameEvents, GameItem, GameStates, Player, PlayerSession, QueryParams, ServerErrors } from "../../types"
+import { GameContext, GameEvent, GameEvents, GameItem, GameStates, Player, PlayerSession, ServerErrors } from "../../types"
 import { GameMachine, makeGame } from "../../machine/GameMachine"
 import ReconnectingWebSocket from "reconnecting-websocket"
-import { urlSearchParams } from "../func/url"
+import { getGameId } from "../func/url"
 import { getSession, logout } from "../func/session"
 import { InterpreterFrom } from "xstate"
 
@@ -50,7 +50,7 @@ export function GameContextProvider({ children }: PropsWithChildren) {
 
     useEffect(() => {
         if (!socket) {
-            const gameId = urlSearchParams().get(QueryParams.GAMEID)
+            const gameId = getGameId();
             const session = getSession()
             if (gameId && session) {
                 connect(session, gameId)
