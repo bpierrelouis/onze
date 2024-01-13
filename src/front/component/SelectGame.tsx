@@ -27,7 +27,8 @@ export function SelectGame() {
 }
 
 function Cell({ gameItem }: { gameItem: GameItem }) {
-    return <li className="cell" onClick={() => changeGame(gameItem.id)}>{gameItem.numberOfPlayer} joueur{gameItem.numberOfPlayer > 1 ? "s" : ""}</li>;
+    const text = gameItem.numberOfPlayer + " joueur" + (gameItem.numberOfPlayer > 1 ? "s" : "");
+    return <li className="cell" onClick={() => changeGame(gameItem.id)}>{text}</li>;
 }
 
 function changeGame(gameId: string) {

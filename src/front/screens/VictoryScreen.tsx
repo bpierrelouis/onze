@@ -9,12 +9,13 @@ export function VictoryScreen() {
     const { context, send, state } = useGame();
     const winner = currentPlayer(context);
 
+    const isGameVictory = state === GameStates.GAME_VICTORY;
     const restart = () => send({ type: "restart" });
 
     return <div id="play" className="row">
         <section className="box column">
             <h2 className="flex" style={{ gap: '.5rem' }}>{winner.name} a gagné</h2>
-            {state === GameStates.GAME_VICTORY && <button onClick={prevent(restart)} className="button">Rejouer</button>}
+            {isGameVictory && <button onClick={prevent(restart)} className="button">Rejouer</button>}
         </section>
         <ScoresBoard />
         <CardBoard />

@@ -7,6 +7,8 @@ export function DrawCard({ selected, setSelected }: { selected?: number, setSele
     const { context, send, can } = useGame();
     const player = currentPlayer(context);
 
+    const title = player.name + " doit " + (context.doesCurrentPlayerTakeCard ? "jeter" : "piocher");
+
     const trashClick = () => {
         if (can({ type: "drawTrashCard" })) {
             send({ type: "drawTrashCard" });
@@ -17,10 +19,10 @@ export function DrawCard({ selected, setSelected }: { selected?: number, setSele
     }
 
     return <section className="playingCards box column">
-        <h2>{player.name} doit {context.doesCurrentPlayerTakeCard ? "jeter" : "piocher"}</h2>
+        <h2>{title}</h2>
         <div className="row">
             <TrashCard card={context.trashCard} onClick={trashClick} />
             <div className="card back" onClick={prevent(() => send({ type: "drawDeckCard" }))}></div>
         </div>
-    </section>
+    </section>;
 }
