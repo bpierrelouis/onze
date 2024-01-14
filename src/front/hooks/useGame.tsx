@@ -66,7 +66,6 @@ export function GameContextProvider({ children }: PropsWithChildren) {
             } else if (message.type === "gameUpdate") {
                 setMachine(makeGame(message.state, message.context))
             } else if (message.type === "gamesList") {
-                console.log(message)
                 setGameItems(message.gameItems)
             }
         }

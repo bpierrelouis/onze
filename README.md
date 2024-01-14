@@ -13,7 +13,7 @@ Le but de chaque manche est de ne plus avoir de point dans son jeu.
 - les têtes valent 10 points
 - l'as vaut 1 point
 - le 2 et le 3 valent 0 point
-- les autres cartes valent leur valeur (obvious ^^)
+- les autres cartes valent leur valeur
 
 # Pattern des cartes à poser
 Plus on avance dans le jeu (dans les manches), plus on doit poser de cartes.
