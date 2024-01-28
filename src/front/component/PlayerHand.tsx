@@ -37,7 +37,7 @@ export function PlayerHand({ selected, setSelected }: { selected?: number, setSe
         playerHand.push(<ul key={0} className="hand">{player.cards.map((c, i) => cardElement(i, c))}</ul>);
 
     } else {
-        const groups = groupCard(context.round, player.cards);
+        const groups = groupCard(context, player.cards);
 
         let i = 0;
         groups.forEach((group) => {

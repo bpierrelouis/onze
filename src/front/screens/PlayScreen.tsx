@@ -9,11 +9,11 @@ export function PlayScreen() {
     const { send } = useGame();
     const [selected, setSelected] = useState<number>();
 
-    const putCard = (i: number) => {
+    const putCard = (index: number, after: boolean) => {
         if (selected === undefined) {
             return;
         }
-        send({ type: "putCard", from: selected, to: i });
+        send({ type: "putCard", from: selected, to: index, after });
         setSelected(undefined);
     }
 

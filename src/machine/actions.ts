@@ -1,5 +1,5 @@
-import { check, currentPlayer, numberOfCardsNeeded, roundType, shuffle } from "../func/game";
-import { DeckType, GameAction, Card, GameContext } from "../types";
+import { currentPlayer, getRoundPattern, getSelectedBoardPackAfterCardWasPlaced, numberOfCardsNeeded, shuffle } from "../func/game";
+import { Card, GameAction, GameContext } from "../types";
 
 export const joinGame: GameAction<"join"> = (context, event) => ({
     players: [...context.players, { id: event.playerId, name: event.name, cards: [], hasPutCards: false, score: 0 }]
@@ -106,7 +106,7 @@ export const putCards: GameAction<"putCards"> = (context, event) => {
     let player = currentPlayer(context);
     let cards = [...player.cards];
 
-    for (let type of roundType(context.round)) {
+    for (let type of getRoundPattern(context)) {
         let numberOfCards = numberOfCardsNeeded(type);
         board.push(cards.slice(0, numberOfCards));
         cards = cards.slice(numberOfCards);
@@ -129,18 +129,11 @@ export const putCards: GameAction<"putCards"> = (context, event) => {
 export const putCard: GameAction<"putCard"> = (context, event) => {
     let player = currentPlayer(context);
     let playerCards = player.cards.slice();
-    const card = playerCards[event.from];
-    let boardCards = context.board[event.to].slice();
-
-    if (check([card, ...boardCards], DeckType.SUITE)) {
-        boardCards.unshift(card);
-    } else {
-        boardCards.push(card);
-    }
 
     playerCards = playerCards.filter((_, i) => i !== event.from);
+
     let board = context.board.slice();
-    board[event.to] = boardCards;
+    board[event.to] = getSelectedBoardPackAfterCardWasPlaced(context, event);
 
     return {
         players: [

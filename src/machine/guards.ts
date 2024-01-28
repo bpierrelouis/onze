@@ -1,5 +1,5 @@
-import { check, currentPlayer, groupCard, roundType } from "../func/game";
-import { DeckType, GameGuard } from "../types";
+import { check, currentPlayer, groupCard, getRoundPattern, getSelectedBoardPackAfterCardWasPlaced, getSelectedPattern } from "../func/game";
+import { GameGuard } from "../types";
 
 export const canJoin: GameGuard<"join"> = (context, event) => {
     return context.players.length < 2 && context.players.find(p => p.id === event.playerId) === undefined
@@ -46,11 +46,11 @@ export const canPutCards: GameGuard<"putCards"> = (context, event) => {
     }
 
     let cards = player.cards;
-    let groups = groupCard(context.round, cards);
-    let round = roundType(context.round);
+    let groups = groupCard(context, cards);
+    let roundPattern = getRoundPattern(context);
 
-    for (let i = 0; i < round.length; i++) {
-        if (!check(groups[i], round[i])) {
+    for (let i = 0; i < roundPattern.length; i++) {
+        if (!check(groups[i], roundPattern[i])) {
             return false;
         }
     }
@@ -58,28 +58,30 @@ export const canPutCards: GameGuard<"putCards"> = (context, event) => {
 }
 
 export const canPutCard: GameGuard<"putCard"> = (context, event) => {
-    if (!((context.currentPlayer === event.playerId) && context.doesCurrentPlayerTakeCard)) {
-        return false;
-    }
-
-    if (!(!context.hasPlayerJustPutCards || (event.to < (context.board.length - roundType(context.round).length)))) {
-        return false;
-    }
-
     let player = currentPlayer(context);
 
-    if (!(player.hasPutCards && player.cards.length > 1)) {
+    const isNotHisTurn = context.currentPlayer !== event.playerId;
+    const didNotDraw = !context.doesCurrentPlayerTakeCard;
+    const didNotPutCards = !player.hasPutCards;
+    const hasOneCardLeft = player.cards.length === 1;
+
+    if (isNotHisTurn || didNotDraw || didNotPutCards || hasOneCardLeft) {
         return false;
     }
 
-    const card = player.cards[event.from];
-    const board = context.board[event.to];
+    const board = context.board;
+    const roundPattern = getRoundPattern(context);
 
-    if (check(board, DeckType.BRELAN)) {
-        return check([...board, card], DeckType.BRELAN);
-    } else {
-        return check([...board, card], DeckType.SUITE) || check([card, ...board], DeckType.SUITE);
+    const isTryingToCompleteHisOwnGame = event.to >= (board.length - roundPattern.length);
+
+    if (context.hasPlayerJustPutCards && isTryingToCompleteHisOwnGame) {
+        return false;
     }
+
+    const pack = getSelectedBoardPackAfterCardWasPlaced(context, event);
+    const pattern = getSelectedPattern(context, event);
+
+    return check(pack, pattern);
 }
 
 export const isWinningRoundDrop: GameGuard<"dropCard"> = (context, event) => {

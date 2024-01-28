@@ -8,16 +8,9 @@ export enum GameStates {
     GAME_VICTORY = "GAME_VICTORY"
 }
 
-export enum QueryParams {
-    GAMEID = "gameId"
-}
-
 export enum ServerErrors {
     AuthError
 }
-
-// export const cardSuits = ["spades", "diams", "clubs", "hearts"];
-// export const cardValues = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
 
 export enum CardSuit {
     SPADES = "spades",
@@ -95,7 +88,7 @@ export type GameItem = {
     numberOfPlayer: number
 }
 
-export enum DeckType {
+export enum Pattern {
     BRELAN = "Brelan",
     SUITE = "Suite"
 }

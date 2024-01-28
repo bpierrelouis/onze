@@ -1,5 +1,3 @@
-import { QueryParams } from "../../types"
-
 function urlSearchParams() {
     return new URL(window.location.href).searchParams
 }
@@ -15,9 +13,9 @@ function updateQueryParams(
 }
 
 export function getGameId(): string | null {
-    return urlSearchParams().get(QueryParams.GAMEID)
+    return urlSearchParams().get("gameId")
 }
 
 export function setGameId(gameId: string) {
-    updateQueryParams({ [QueryParams.GAMEID]: gameId })
+    updateQueryParams({ ["gameId"]: gameId })
 }

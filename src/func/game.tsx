@@ -1,4 +1,4 @@
-import { DeckType, Card, GameContext, Player, CardSuit, CardValue } from "../types";
+import { Pattern, Card, GameContext, Player, CardSuit, CardValue, GameEvent } from "../types";
 
 export function currentPlayer(context: GameContext): Player {
     const player = context.players.find(p => p.id === context.currentPlayer)
@@ -44,20 +44,20 @@ export function getCardClassName(card: Card): string {
     return className;
 }
 
-export function roundType(round: GameContext["round"]): DeckType[] {
-    switch (round) {
-        case 1: return [DeckType.BRELAN, DeckType.BRELAN];
-        case 2: return [DeckType.SUITE, DeckType.BRELAN];
-        case 3: return [DeckType.SUITE, DeckType.SUITE];
-        case 4: return [DeckType.BRELAN, DeckType.BRELAN, DeckType.BRELAN];
-        case 5: return [DeckType.SUITE, DeckType.BRELAN, DeckType.BRELAN];
-        case 6: return [DeckType.SUITE, DeckType.SUITE, DeckType.BRELAN];
+export function getRoundPattern(context: GameContext): Pattern[] {
+    switch (context.round) {
+        case 1: return [Pattern.BRELAN, Pattern.BRELAN];
+        case 2: return [Pattern.SUITE, Pattern.BRELAN];
+        case 3: return [Pattern.SUITE, Pattern.SUITE];
+        case 4: return [Pattern.BRELAN, Pattern.BRELAN, Pattern.BRELAN];
+        case 5: return [Pattern.SUITE, Pattern.BRELAN, Pattern.BRELAN];
+        case 6: return [Pattern.SUITE, Pattern.SUITE, Pattern.BRELAN];
         default: return [];
     }
 }
 
-export function numberOfCardsNeeded(type: DeckType): number {
-    return (type === DeckType.BRELAN) ? 3 : 4;
+export function numberOfCardsNeeded(type: Pattern): number {
+    return (type === Pattern.BRELAN) ? 3 : 4;
 }
 
 function isBrelan(cards: Card[]): boolean {
@@ -118,13 +118,13 @@ function isSuite(cards: Card[]): boolean {
     return indexOfValues.every((v, i) => v === expected[i]);
 }
 
-export function check(cards: Card[], type: DeckType): boolean {
-    return (type === DeckType.BRELAN) ? isBrelan(cards) : isSuite(cards);
+export function check(cards: Card[], type: Pattern): boolean {
+    return (type === Pattern.BRELAN) ? isBrelan(cards) : isSuite(cards);
 }
 
-export function groupCard(round: GameContext["round"], cards: Card[]): Card[][] {
+export function groupCard(context: GameContext, cards: Card[]): Card[][] {
     let copy = cards.slice();
-    const numberOfCards = roundType(round).map((t) => numberOfCardsNeeded(t));
+    const numberOfCards = getRoundPattern(context).map((t) => numberOfCardsNeeded(t));
 
     let list: Card[][] = [];
 
@@ -145,4 +145,24 @@ export function groupCard(round: GameContext["round"], cards: Card[]): Card[][] 
 
 export function getDeckScore(cards: Card[]): number {
     return cards.map((c) => c.score).reduce((sum, current) => sum + current, 0);
+}
+
+export function getSelectedPattern(context: GameContext, event: GameEvent<"putCard">): Pattern {
+    const roundPattern = getRoundPattern(context);
+    const numberOfCards = context.board.map((cards) => cards.length);
+
+    var indexOfGroup = 0;
+    var firstIndexOfGroup = numberOfCards[0];
+    while (indexOfGroup < numberOfCards.length && firstIndexOfGroup < event.to) {
+        indexOfGroup++;
+        firstIndexOfGroup += numberOfCards[indexOfGroup];
+    }
+    return roundPattern[indexOfGroup % roundPattern.length];
+}
+
+export function getSelectedBoardPackAfterCardWasPlaced(context: GameContext, event: GameEvent<"putCard">): Card[] {
+    let player = currentPlayer(context);
+    let cardSelected = player.cards[event.from];
+    let deckSelected = context.board[event.to];
+    return event.after ? [...deckSelected, cardSelected] : [cardSelected, ...deckSelected];
 }
