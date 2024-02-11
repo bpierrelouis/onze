@@ -164,5 +164,12 @@ export function getSelectedBoardPackAfterCardWasPlaced(context: GameContext, eve
     let player = currentPlayer(context);
     let cardSelected = player.cards[event.from];
     let deckSelected = context.board[event.to];
-    return event.after ? [...deckSelected, cardSelected] : [cardSelected, ...deckSelected];
+
+    const cardPlacedAfter = [...deckSelected, cardSelected];
+    const cardPlacedBefore = [cardSelected, ...deckSelected];
+
+    const pattern = getSelectedPattern(context, event);
+    const canBePlacedAfter = check(cardPlacedAfter, pattern);
+
+    return (event.after ?? canBePlacedAfter) ? cardPlacedAfter : cardPlacedBefore;
 }

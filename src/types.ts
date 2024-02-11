@@ -66,6 +66,10 @@ export class Card {
         });
         return deck;
     }
+
+    public get isJoker(): boolean {
+        return this.score === Card.joker.score;
+    }
 }
 
 export type PlayerSession = {

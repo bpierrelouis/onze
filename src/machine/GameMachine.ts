@@ -23,7 +23,7 @@ export const GameModel = createModel({
         dropCard: (playerId: Player["id"], index: number) => ({ playerId, index }),
         moveCard: (playerId: Player["id"], from: number, to: number) => ({ playerId, from, to }),
         putCards: (playerId: Player["id"]) => ({ playerId }),
-        putCard: (playerId: Player["id"], from: number, to: number, after: boolean) => ({ playerId, from, to, after }),
+        putCard: (playerId: Player["id"], from: number, to: number, after?: boolean) => ({ playerId, from, to, after }),
         restart: () => ({})
     }
 })
