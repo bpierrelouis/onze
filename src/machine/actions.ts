@@ -9,11 +9,17 @@ export const leaveGame: GameAction<"leave"> = (context, event) => ({
     players: context.players.filter(p => p.id !== event.playerId)
 })
 
-export const switchPlayer = (context: GameContext) => ({
-    currentPlayer: context.players.find(p => p.id !== context.currentPlayer)!.id,
-    doesCurrentPlayerTakeCard: false,
-    hasPlayerJustPutCards: false
-})
+export const switchPlayer = (context: GameContext) => {
+    const previousPlayer = currentPlayer(context);
+    const players = context.players;
+    const nextPlayer = players.find(p => p.position === previousPlayer.position! + 1) ?? players.find(p => p.position === 0);
+
+    return {
+        currentPlayer: nextPlayer!.id,
+        doesCurrentPlayerTakeCard: false,
+        hasPlayerJustPutCards: false
+    }
+}
 
 export const startGame = (context: GameContext) => {
     let players = context.players;

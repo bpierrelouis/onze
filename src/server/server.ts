@@ -60,8 +60,8 @@ fastify.register(async (f) => {
         publishMachine(game.state, connection)
         publishGamesListToPlayers(games, connections)
 
-        connection.socket.onmessage = (rawMessage) => {
-            const message = JSON.parse(rawMessage.toLocaleString())
+        connection.socket.onmessage = (event) => {
+            const message = JSON.parse(event.data.toLocaleString())
             if (message.type !== "gameUpdate") { return }
             game.send(message.event)
             publishGamesListToPlayers(games, connections)
